@@ -29,7 +29,7 @@ from pm4py.objects.log import obj, exporter, importer, util
 
 def main(mode):
     BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))  
-    DATA_DIR = os.path.join(BASE_DIR, "data1")  
+    DATA_DIR = os.path.join(BASE_DIR, "data")  
     RESULTS_DIR = os.path.join(BASE_DIR, "results" if mode == "case" else "mined_results")
     # logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 
