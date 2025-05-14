@@ -41,3 +41,5 @@ Output
     main(mode): The main function that orchestrates the conformance checking process.
 
     compare_vectors_with_penalty: Compares two sets of Node2Vec embeddings using a penalty factor.
+# Reference
+    [1] . Sommers, V. Menkovski, and D. Fahland, “Supervised learning of process discovery techniques using graph neural networks,” Information Systems, vol. 115, p. 102209, 2023.
