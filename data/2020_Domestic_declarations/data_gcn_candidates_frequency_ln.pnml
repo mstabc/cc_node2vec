@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="2&#10;c0.28&#10;a1.00">
+        <name>
+          <text>2
+c0.28
+a1.00</text>
+        </name>
+      </place>
+      <place id="7&#10;c0.54&#10;a0.00">
+        <name>
+          <text>7
+c0.54
+a0.00</text>
+        </name>
+      </place>
+      <place id="6&#10;c0.43&#10;a1.00">
+        <name>
+          <text>6
+c0.43
+a1.00</text>
+        </name>
+      </place>
+      <place id="4&#10;c0.79&#10;a1.00">
+        <name>
+          <text>4
+c0.79
+a1.00</text>
+        </name>
+      </place>
+      <place id="0&#10;c0.84&#10;a1.00">
+        <name>
+          <text>0
+c0.84
+a1.00</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="5&#10;c0.78&#10;a1.00">
+        <name>
+          <text>5
+c0.78
+a1.00</text>
+        </name>
+      </place>
+      <place id="1&#10;c0.60&#10;a1.00">
+        <name>
+          <text>1
+c0.60
+a1.00</text>
+        </name>
+      </place>
+      <place id="3&#10;c0.46&#10;a1.00">
+        <name>
+          <text>3
+c0.46
+a1.00</text>
+        </name>
+      </place>
+      <transition id="Declaration APPROVED by PRE_APPROVER">
+        <name>
+          <text>Declaration APPROVED by PRE_APPROVER</text>
+        </name>
+      </transition>
+      <transition id="Declaration FINAL_APPROVED by SUPERVISOR">
+        <name>
+          <text>Declaration FINAL_APPROVED by SUPERVISOR</text>
+        </name>
+      </transition>
+      <transition id="Declaration FOR_APPROVAL by PRE_APPROVER">
+        <name>
+          <text>Declaration FOR_APPROVAL by PRE_APPROVER</text>
+        </name>
+      </transition>
+      <transition id="Payment Handled">
+        <name>
+          <text>Payment Handled</text>
+        </name>
+      </transition>
+      <transition id="Request Payment">
+        <name>
+          <text>Request Payment</text>
+        </name>
+      </transition>
+      <transition id="Declaration SAVED by EMPLOYEE">
+        <name>
+          <text>Declaration SAVED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by BUDGET OWNER">
+        <name>
+          <text>Declaration REJECTED by BUDGET OWNER</text>
+        </name>
+      </transition>
+      <transition id="Declaration APPROVED by BUDGET OWNER">
+        <name>
+          <text>Declaration APPROVED by BUDGET OWNER</text>
+        </name>
+      </transition>
+      <transition id="|">
+        <name>
+          <text>|</text>
+        </name>
+      </transition>
+      <transition id="Declaration SUBMITTED by EMPLOYEE">
+        <name>
+          <text>Declaration SUBMITTED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="&gt;">
+        <name>
+          <text>&gt;</text>
+        </name>
+      </transition>
+      <transition id="Declaration APPROVED by ADMINISTRATION">
+        <name>
+          <text>Declaration APPROVED by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by SUPERVISOR">
+        <name>
+          <text>Declaration REJECTED by SUPERVISOR</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by ADMINISTRATION">
+        <name>
+          <text>Declaration REJECTED by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by MISSING">
+        <name>
+          <text>Declaration REJECTED by MISSING</text>
+        </name>
+      </transition>
+      <transition id="Declaration FOR_APPROVAL by ADMINISTRATION">
+        <name>
+          <text>Declaration FOR_APPROVAL by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by PRE_APPROVER">
+        <name>
+          <text>Declaration REJECTED by PRE_APPROVER</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by EMPLOYEE">
+        <name>
+          <text>Declaration REJECTED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="Declaration FOR_APPROVAL by SUPERVISOR">
+        <name>
+          <text>Declaration FOR_APPROVAL by SUPERVISOR</text>
+        </name>
+      </transition>
+      <arc id="-9223363247678173815" source="5&#10;c0.78&#10;a1.00" target="Request Payment"/>
+      <arc id="-9223363247678173794" source="Declaration REJECTED by BUDGET OWNER" target="3&#10;c0.46&#10;a1.00"/>
+      <arc id="-9223363247673808096" source="&gt;" target="0&#10;c0.84&#10;a1.00"/>
+      <arc id="8789180967842" source="Declaration SUBMITTED by EMPLOYEE" target="1&#10;c0.60&#10;a1.00"/>
+      <arc id="-9223363247678173787" source="Declaration APPROVED by PRE_APPROVER" target="7&#10;c0.54&#10;a0.00"/>
+      <arc id="8789180967856" source="0&#10;c0.84&#10;a1.00" target="Declaration SUBMITTED by EMPLOYEE"/>
+      <arc id="8789176602032" source="Declaration FINAL_APPROVED by SUPERVISOR" target="5&#10;c0.78&#10;a1.00"/>
+      <arc id="8789176601906" source="1&#10;c0.60&#10;a1.00" target="Declaration APPROVED by ADMINISTRATION"/>
+      <arc id="-9223363247678173773" source="Declaration APPROVED by ADMINISTRATION" target="2&#10;c0.28&#10;a1.00"/>
+      <arc id="8789176602039" source="Declaration REJECTED by SUPERVISOR" target="3&#10;c0.46&#10;a1.00"/>
+      <arc id="8789176601913" source="Declaration SAVED by EMPLOYEE" target="4&#10;c0.79&#10;a1.00"/>
+      <arc id="8789176602046" source="Declaration REJECTED by PRE_APPROVER" target="3&#10;c0.46&#10;a1.00"/>
+      <arc id="8789176601934" source="1&#10;c0.60&#10;a1.00" target="Declaration APPROVED by PRE_APPROVER"/>
+      <arc id="-9223363247678173745" source="2&#10;c0.28&#10;a1.00" target="Declaration APPROVED by BUDGET OWNER"/>
+      <arc id="8789176602067" source="2&#10;c0.28&#10;a1.00" target="Declaration REJECTED by BUDGET OWNER"/>
+      <arc id="8789180967765" source="0&#10;c0.84&#10;a1.00" target="Declaration SAVED by EMPLOYEE"/>
+      <arc id="-9223363247678173738" source="2&#10;c0.28&#10;a1.00" target="Declaration FINAL_APPROVED by SUPERVISOR"/>
+      <arc id="-9223363247678173864" source="Declaration REJECTED by MISSING" target="4&#10;c0.79&#10;a1.00"/>
+      <arc id="8789176601948" source="Declaration REJECTED by EMPLOYEE" target="4&#10;c0.79&#10;a1.00"/>
+      <arc id="8789176599644" source="1&#10;c0.60&#10;a1.00" target="Declaration REJECTED by ADMINISTRATION"/>
+      <arc id="-9223363247678173731" source="4&#10;c0.79&#10;a1.00" target="|"/>
+      <arc id="-9223363247678173857" source="6&#10;c0.43&#10;a1.00" target="Payment Handled"/>
+      <arc id="8789176601955" source="Request Payment" target="6&#10;c0.43&#10;a1.00"/>
+      <arc id="-9223363247678173724" source="2&#10;c0.28&#10;a1.00" target="Declaration REJECTED by SUPERVISOR"/>
+      <arc id="-9223363247678173850" source="1&#10;c0.60&#10;a1.00" target="Declaration REJECTED by PRE_APPROVER"/>
+      <arc id="8789176601962" source="5&#10;c0.78&#10;a1.00" target="Declaration REJECTED by MISSING"/>
+      <arc id="-9223363247678173843" source="Declaration REJECTED by ADMINISTRATION" target="3&#10;c0.46&#10;a1.00"/>
+      <arc id="8789176601976" source="Declaration APPROVED by BUDGET OWNER" target="7&#10;c0.54&#10;a0.00"/>
+      <arc id="-9223363247678173703" source="3&#10;c0.46&#10;a1.00" target="Declaration REJECTED by EMPLOYEE"/>
+      <arc id="8789176602109" source="7&#10;c0.54&#10;a0.00" target="Declaration FINAL_APPROVED by SUPERVISOR"/>
+      <arc id="8789176601983" source="Payment Handled" target="4&#10;c0.79&#10;a1.00"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="4&#10;c0.79&#10;a1.00">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

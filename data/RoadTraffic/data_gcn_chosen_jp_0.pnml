@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="0&#10;c1.00&#10;a1.00">
+        <name>
+          <text>0
+c1.00
+a1.00</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="4&#10;c0.71&#10;a1.00">
+        <name>
+          <text>4
+c0.71
+a1.00</text>
+        </name>
+      </place>
+      <place id="6&#10;c0.21&#10;a1.00">
+        <name>
+          <text>6
+c0.21
+a1.00</text>
+        </name>
+      </place>
+      <place id="3&#10;c0.10&#10;a1.00">
+        <name>
+          <text>3
+c0.10
+a1.00</text>
+        </name>
+      </place>
+      <place id="7&#10;c0.84&#10;a1.00">
+        <name>
+          <text>7
+c0.84
+a1.00</text>
+        </name>
+      </place>
+      <place id="9&#10;c0.83&#10;a0.16">
+        <name>
+          <text>9
+c0.83
+a0.16</text>
+        </name>
+      </place>
+      <place id="5&#10;c0.05&#10;a1.00">
+        <name>
+          <text>5
+c0.05
+a1.00</text>
+        </name>
+      </place>
+      <place id="8&#10;c0.50&#10;a0.21">
+        <name>
+          <text>8
+c0.50
+a0.21</text>
+        </name>
+      </place>
+      <place id="2&#10;c0.97&#10;a1.00">
+        <name>
+          <text>2
+c0.97
+a1.00</text>
+        </name>
+      </place>
+      <place id="1&#10;c0.98&#10;a1.00">
+        <name>
+          <text>1
+c0.98
+a1.00</text>
+        </name>
+      </place>
+      <transition id="Appeal to Judge">
+        <name>
+          <text>Appeal to Judge</text>
+        </name>
+      </transition>
+      <transition id="|">
+        <name>
+          <text>|</text>
+        </name>
+      </transition>
+      <transition id="Insert Fine Notification">
+        <name>
+          <text>Insert Fine Notification</text>
+        </name>
+      </transition>
+      <transition id="Send for Credit Collection">
+        <name>
+          <text>Send for Credit Collection</text>
+        </name>
+      </transition>
+      <transition id="st1">
+        <name>
+          <text>st1</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="b06e8aca-b677-4ff1-bc77-e3923ff5a0ac"/>
+      </transition>
+      <transition id="st2">
+        <name>
+          <text>st2</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="431b7180-4d52-4c50-a8b7-44a67798bdb3"/>
+      </transition>
+      <transition id="st0">
+        <name>
+          <text>st0</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="614d688f-59ad-4973-9e4b-622184e0bf87"/>
+      </transition>
+      <transition id="Notify Result Appeal to Offender">
+        <name>
+          <text>Notify Result Appeal to Offender</text>
+        </name>
+      </transition>
+      <transition id="Payment">
+        <name>
+          <text>Payment</text>
+        </name>
+      </transition>
+      <transition id="Insert Date Appeal to Prefecture">
+        <name>
+          <text>Insert Date Appeal to Prefecture</text>
+        </name>
+      </transition>
+      <transition id="Receive Result Appeal from Prefecture">
+        <name>
+          <text>Receive Result Appeal from Prefecture</text>
+        </name>
+      </transition>
+      <transition id="Send Fine">
+        <name>
+          <text>Send Fine</text>
+        </name>
+      </transition>
+      <transition id="st3">
+        <name>
+          <text>st3</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="3ab089fd-1d2d-4fe3-8dfb-dfb2a7efc673"/>
+      </transition>
+      <transition id="&gt;">
+        <name>
+          <text>&gt;</text>
+        </name>
+      </transition>
+      <transition id="Add penalty">
+        <name>
+          <text>Add penalty</text>
+        </name>
+      </transition>
+      <transition id="Create Fine">
+        <name>
+          <text>Create Fine</text>
+        </name>
+      </transition>
+      <transition id="Send Appeal to Prefecture">
+        <name>
+          <text>Send Appeal to Prefecture</text>
+        </name>
+      </transition>
+      <arc id="-9223363303373681790" source="4&#10;c0.71&#10;a1.00" target="Add penalty"/>
+      <arc id="-9223363303373531900" source="6&#10;c0.21&#10;a1.00" target="|"/>
+      <arc id="8733481093896" source="5&#10;c0.05&#10;a1.00" target="Send Appeal to Prefecture"/>
+      <arc id="-9223363303373681909" source="2&#10;c0.97&#10;a1.00" target="st1"/>
+      <arc id="8733481093903" source="0&#10;c1.00&#10;a1.00" target="Create Fine"/>
+      <arc id="8733481243919" source="5&#10;c0.05&#10;a1.00" target="st0"/>
+      <arc id="-9223363303373531886" source="st0" target="7&#10;c0.84&#10;a1.00"/>
+      <arc id="-9223363303373681769" source="5&#10;c0.05&#10;a1.00" target="Receive Result Appeal from Prefecture"/>
+      <arc id="-9223363303373531879" source="Insert Date Appeal to Prefecture" target="7&#10;c0.84&#10;a1.00"/>
+      <arc id="8733481094043" source="st1" target="6&#10;c0.21&#10;a1.00"/>
+      <arc id="8733481093917" source="5&#10;c0.05&#10;a1.00" target="Insert Date Appeal to Prefecture"/>
+      <arc id="8733481243933" source="7&#10;c0.84&#10;a1.00" target="Send Appeal to Prefecture"/>
+      <arc id="8733481093924" source="Insert Fine Notification" target="4&#10;c0.71&#10;a1.00"/>
+      <arc id="-9223363303373531865" source="7&#10;c0.84&#10;a1.00" target="st2"/>
+      <arc id="8733481243947" source="st2" target="8&#10;c0.50&#10;a0.21"/>
+      <arc id="8733481243954" source="Receive Result Appeal from Prefecture" target="8&#10;c0.50&#10;a0.21"/>
+      <arc id="-9223363303373681741" source="5&#10;c0.05&#10;a1.00" target="Payment"/>
+      <arc id="-9223363303373531851" source="8&#10;c0.50&#10;a0.21" target="Notify Result Appeal to Offender"/>
+      <arc id="8733481094078" source="Appeal to Judge" target="6&#10;c0.21&#10;a1.00"/>
+      <arc id="8733481243968" source="1&#10;c0.98&#10;a1.00" target="st3"/>
+      <arc id="-9223363303373531837" source="st3" target="9&#10;c0.83&#10;a0.16"/>
+      <arc id="8733481093959" source="&gt;" target="0&#10;c1.00&#10;a1.00"/>
+      <arc id="-9223363303373531830" source="Notify Result Appeal to Offender" target="9&#10;c0.83&#10;a0.16"/>
+      <arc id="8733481094092" source="Send Fine" target="3&#10;c0.10&#10;a1.00"/>
+      <arc id="8733481243982" source="9&#10;c0.83&#10;a0.16" target="Send for Credit Collection"/>
+      <arc id="-9223363303373681713" source="Create Fine" target="1&#10;c0.98&#10;a1.00"/>
+      <arc id="8733481093973" source="Add penalty" target="5&#10;c0.05&#10;a1.00"/>
+      <arc id="-9223363303373681706" source="5&#10;c0.05&#10;a1.00" target="Appeal to Judge"/>
+      <arc id="8733481094106" source="Create Fine" target="2&#10;c0.97&#10;a1.00"/>
+      <arc id="8733481093980" source="Payment" target="6&#10;c0.21&#10;a1.00"/>
+      <arc id="-9223363303373681825" source="3&#10;c0.10&#10;a1.00" target="Insert Fine Notification"/>
+      <arc id="-9223363303373681692" source="2&#10;c0.97&#10;a1.00" target="Payment"/>
+      <arc id="8733481094120" source="5&#10;c0.05&#10;a1.00" target="Send for Credit Collection"/>
+      <arc id="-9223363303373681685" source="1&#10;c0.98&#10;a1.00" target="Send Fine"/>
+      <arc id="-9223363303373681811" source="Send for Credit Collection" target="6&#10;c0.21&#10;a1.00"/>
+      <arc id="-9223363303373681797" source="Send Appeal to Prefecture" target="6&#10;c0.21&#10;a1.00"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="6&#10;c0.21&#10;a1.00">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

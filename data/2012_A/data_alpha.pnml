@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="start">
+        <name>
+          <text>start</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="({'A_SUBMITTED'}, {'A_PARTLYSUBMITTED'})">
+        <name>
+          <text>({'A_SUBMITTED'}, {'A_PARTLYSUBMITTED'})</text>
+        </name>
+      </place>
+      <place id="({'A_PREACCEPTED'}, {'A_ACCEPTED'})">
+        <name>
+          <text>({'A_PREACCEPTED'}, {'A_ACCEPTED'})</text>
+        </name>
+      </place>
+      <place id="end">
+        <name>
+          <text>end</text>
+        </name>
+      </place>
+      <place id="({'A_PARTLYSUBMITTED'}, {'A_PREACCEPTED'})">
+        <name>
+          <text>({'A_PARTLYSUBMITTED'}, {'A_PREACCEPTED'})</text>
+        </name>
+      </place>
+      <place id="({'A_ACCEPTED'}, {'A_FINALIZED'})">
+        <name>
+          <text>({'A_ACCEPTED'}, {'A_FINALIZED'})</text>
+        </name>
+      </place>
+      <place id="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})">
+        <name>
+          <text>({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})</text>
+        </name>
+      </place>
+      <place id="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_REGISTERED', 'A_DECLINED'})">
+        <name>
+          <text>({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_REGISTERED', 'A_DECLINED'})</text>
+        </name>
+      </place>
+      <place id="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})">
+        <name>
+          <text>({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})</text>
+        </name>
+      </place>
+      <place id="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})">
+        <name>
+          <text>({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})</text>
+        </name>
+      </place>
+      <place id="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_REGISTERED', 'A_DECLINED', 'A_CANCELLED'})">
+        <name>
+          <text>({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_REGISTERED', 'A_DECLINED', 'A_CANCELLED'})</text>
+        </name>
+      </place>
+      <place id="({'A_PARTLYSUBMITTED', 'A_ACCEPTED'}, {'A_CANCELLED', 'A_DECLINED'})">
+        <name>
+          <text>({'A_PARTLYSUBMITTED', 'A_ACCEPTED'}, {'A_CANCELLED', 'A_DECLINED'})</text>
+        </name>
+      </place>
+      <place id="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})">
+        <name>
+          <text>({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})</text>
+        </name>
+      </place>
+      <transition id="A_APPROVED">
+        <name>
+          <text>A_APPROVED</text>
+        </name>
+      </transition>
+      <transition id="A_FINALIZED">
+        <name>
+          <text>A_FINALIZED</text>
+        </name>
+      </transition>
+      <transition id="A_PREACCEPTED">
+        <name>
+          <text>A_PREACCEPTED</text>
+        </name>
+      </transition>
+      <transition id="A_ACTIVATED">
+        <name>
+          <text>A_ACTIVATED</text>
+        </name>
+      </transition>
+      <transition id="A_CANCELLED">
+        <name>
+          <text>A_CANCELLED</text>
+        </name>
+      </transition>
+      <transition id="A_PARTLYSUBMITTED">
+        <name>
+          <text>A_PARTLYSUBMITTED</text>
+        </name>
+      </transition>
+      <transition id="A_ACCEPTED">
+        <name>
+          <text>A_ACCEPTED</text>
+        </name>
+      </transition>
+      <transition id="A_REGISTERED">
+        <name>
+          <text>A_REGISTERED</text>
+        </name>
+      </transition>
+      <transition id="A_SUBMITTED">
+        <name>
+          <text>A_SUBMITTED</text>
+        </name>
+      </transition>
+      <transition id="A_DECLINED">
+        <name>
+          <text>A_DECLINED</text>
+        </name>
+      </transition>
+      <arc id="140475871207680" source="A_PREACCEPTED" target="end"/>
+      <arc id="140475871208064" source="A_DECLINED" target="end"/>
+      <arc id="140475871208832" source="A_PREACCEPTED" target="({'A_PREACCEPTED'}, {'A_ACCEPTED'})"/>
+      <arc id="140475871209216" source="({'A_ACCEPTED'}, {'A_FINALIZED'})" target="A_FINALIZED"/>
+      <arc id="140475871209600" source="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})" target="A_CANCELLED"/>
+      <arc id="140475871209984" source="A_PREACCEPTED" target="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_REGISTERED', 'A_DECLINED'})"/>
+      <arc id="140475871210368" source="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_REGISTERED', 'A_DECLINED'})" target="A_DECLINED"/>
+      <arc id="140475871210752" source="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})" target="A_CANCELLED"/>
+      <arc id="140475871211136" source="A_FINALIZED" target="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})"/>
+      <arc id="140475871224064" source="A_FINALIZED" target="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_REGISTERED', 'A_DECLINED', 'A_CANCELLED'})"/>
+      <arc id="140475871225312" source="A_ACCEPTED" target="({'A_PARTLYSUBMITTED', 'A_ACCEPTED'}, {'A_CANCELLED', 'A_DECLINED'})"/>
+      <arc id="140475871224448" source="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_REGISTERED', 'A_DECLINED', 'A_CANCELLED'})" target="A_CANCELLED"/>
+      <arc id="140475874344864" source="A_ACTIVATED" target="end"/>
+      <arc id="140475871207584" source="A_APPROVED" target="end"/>
+      <arc id="140475871207968" source="A_REGISTERED" target="end"/>
+      <arc id="140475871209504" source="A_FINALIZED" target="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})"/>
+      <arc id="140475871209120" source="A_ACCEPTED" target="({'A_ACCEPTED'}, {'A_FINALIZED'})"/>
+      <arc id="140475871208352" source="({'A_SUBMITTED'}, {'A_PARTLYSUBMITTED'})" target="A_PARTLYSUBMITTED"/>
+      <arc id="140475871210272" source="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_REGISTERED', 'A_DECLINED'})" target="A_REGISTERED"/>
+      <arc id="140475871210656" source="A_FINALIZED" target="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})"/>
+      <arc id="140475871211424" source="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})" target="A_APPROVED"/>
+      <arc id="140475871224352" source="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_REGISTERED', 'A_DECLINED', 'A_CANCELLED'})" target="A_DECLINED"/>
+      <arc id="140475871224832" source="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})" target="A_CANCELLED"/>
+      <arc id="140475871225216" source="A_PARTLYSUBMITTED" target="({'A_PARTLYSUBMITTED', 'A_ACCEPTED'}, {'A_CANCELLED', 'A_DECLINED'})"/>
+      <arc id="140475871224736" source="A_PARTLYSUBMITTED" target="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})"/>
+      <arc id="140475871207488" source="A_FINALIZED" target="end"/>
+      <arc id="140475871207872" source="A_ACCEPTED" target="end"/>
+      <arc id="140475871208256" source="A_SUBMITTED" target="({'A_SUBMITTED'}, {'A_PARTLYSUBMITTED'})"/>
+      <arc id="140475871208640" source="({'A_PARTLYSUBMITTED'}, {'A_PREACCEPTED'})" target="A_PREACCEPTED"/>
+      <arc id="140475871209408" source="A_PREACCEPTED" target="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})"/>
+      <arc id="140475871209792" source="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})" target="A_DECLINED"/>
+      <arc id="140475871210176" source="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_REGISTERED', 'A_DECLINED'})" target="A_CANCELLED"/>
+      <arc id="140475871210560" source="A_PREACCEPTED" target="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})"/>
+      <arc id="140475871210944" source="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})" target="A_DECLINED"/>
+      <arc id="140475871211328" source="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})" target="A_CANCELLED"/>
+      <arc id="140475871223872" source="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})" target="A_DECLINED"/>
+      <arc id="140475871224256" source="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_REGISTERED', 'A_DECLINED', 'A_CANCELLED'})" target="A_REGISTERED"/>
+      <arc id="140475871225504" source="({'A_PARTLYSUBMITTED', 'A_ACCEPTED'}, {'A_CANCELLED', 'A_DECLINED'})" target="A_DECLINED"/>
+      <arc id="140475871224640" source="A_FINALIZED" target="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})"/>
+      <arc id="140475874344672" source="start" target="A_SUBMITTED"/>
+      <arc id="140475871207776" source="A_CANCELLED" target="end"/>
+      <arc id="140475871208544" source="A_PARTLYSUBMITTED" target="({'A_PARTLYSUBMITTED'}, {'A_PREACCEPTED'})"/>
+      <arc id="140475871208928" source="({'A_PREACCEPTED'}, {'A_ACCEPTED'})" target="A_ACCEPTED"/>
+      <arc id="140475871209696" source="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})" target="A_APPROVED"/>
+      <arc id="140475871210080" source="A_FINALIZED" target="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_REGISTERED', 'A_DECLINED'})"/>
+      <arc id="140475871210848" source="({'A_PREACCEPTED', 'A_FINALIZED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})" target="A_ACTIVATED"/>
+      <arc id="140475871211232" source="A_PARTLYSUBMITTED" target="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_APPROVED', 'A_DECLINED'})"/>
+      <arc id="140475871224160" source="A_PARTLYSUBMITTED" target="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_REGISTERED', 'A_DECLINED', 'A_CANCELLED'})"/>
+      <arc id="140475871224928" source="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})" target="A_ACTIVATED"/>
+      <arc id="140475871225024" source="({'A_FINALIZED', 'A_PARTLYSUBMITTED'}, {'A_CANCELLED', 'A_ACTIVATED', 'A_DECLINED'})" target="A_DECLINED"/>
+      <arc id="140475871225408" source="({'A_PARTLYSUBMITTED', 'A_ACCEPTED'}, {'A_CANCELLED', 'A_DECLINED'})" target="A_CANCELLED"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="end">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="start">
+        <name>
+          <text>start</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="end">
+        <name>
+          <text>end</text>
+        </name>
+      </place>
+      <place id="({'O_Created'}, {'O_Accepted'})">
+        <name>
+          <text>({'O_Created'}, {'O_Accepted'})</text>
+        </name>
+      </place>
+      <transition id="O_Sent (online only)">
+        <name>
+          <text>O_Sent (online only)</text>
+        </name>
+      </transition>
+      <transition id="O_Accepted">
+        <name>
+          <text>O_Accepted</text>
+        </name>
+      </transition>
+      <transition id="O_Refused">
+        <name>
+          <text>O_Refused</text>
+        </name>
+      </transition>
+      <transition id="O_Create Offer">
+        <name>
+          <text>O_Create Offer</text>
+        </name>
+      </transition>
+      <transition id="O_Cancelled">
+        <name>
+          <text>O_Cancelled</text>
+        </name>
+      </transition>
+      <transition id="O_Sent (mail and online)">
+        <name>
+          <text>O_Sent (mail and online)</text>
+        </name>
+      </transition>
+      <transition id="O_Created">
+        <name>
+          <text>O_Created</text>
+        </name>
+      </transition>
+      <transition id="O_Returned">
+        <name>
+          <text>O_Returned</text>
+        </name>
+      </transition>
+      <arc id="-9223363258968633663" source="O_Cancelled" target="end"/>
+      <arc id="-9223363258968633635" source="O_Accepted" target="end"/>
+      <arc id="8777886142184" source="O_Returned" target="end"/>
+      <arc id="8777886117675" source="O_Created" target="({'O_Created'}, {'O_Accepted'})"/>
+      <arc id="8777886117647" source="({'O_Created'}, {'O_Accepted'})" target="O_Accepted"/>
+      <arc id="-9223363258968633712" source="O_Refused" target="end"/>
+      <arc id="-9223363258968633677" source="O_Sent (mail and online)" target="end"/>
+      <arc id="8777886141981" source="start" target="O_Create Offer"/>
+      <arc id="-9223363258968633698" source="O_Sent (online only)" target="end"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="end">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

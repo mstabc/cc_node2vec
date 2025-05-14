@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="({'Permit APPROVED by ADMINISTRATION'}, {'Permit FINAL_APPROVED by SUPERVISOR'})">
+        <name>
+          <text>({'Permit APPROVED by ADMINISTRATION'}, {'Permit FINAL_APPROVED by SUPERVISOR'})</text>
+        </name>
+      </place>
+      <place id="({'Permit APPROVED by BUDGET OWNER'}, {'Permit FINAL_APPROVED by SUPERVISOR'})">
+        <name>
+          <text>({'Permit APPROVED by BUDGET OWNER'}, {'Permit FINAL_APPROVED by SUPERVISOR'})</text>
+        </name>
+      </place>
+      <place id="({'Permit APPROVED by ADMINISTRATION'}, {'Permit APPROVED by BUDGET OWNER'})">
+        <name>
+          <text>({'Permit APPROVED by ADMINISTRATION'}, {'Permit APPROVED by BUDGET OWNER'})</text>
+        </name>
+      </place>
+      <place id="start">
+        <name>
+          <text>start</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="({'Start trip'}, {'End trip'})">
+        <name>
+          <text>({'Start trip'}, {'End trip'})</text>
+        </name>
+      </place>
+      <place id="end">
+        <name>
+          <text>end</text>
+        </name>
+      </place>
+      <transition id="Declaration APPROVED by ADMINISTRATION">
+        <name>
+          <text>Declaration APPROVED by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Send Reminder">
+        <name>
+          <text>Send Reminder</text>
+        </name>
+      </transition>
+      <transition id="Declaration APPROVED by BUDGET OWNER">
+        <name>
+          <text>Declaration APPROVED by BUDGET OWNER</text>
+        </name>
+      </transition>
+      <transition id="End trip">
+        <name>
+          <text>End trip</text>
+        </name>
+      </transition>
+      <transition id="Permit SUBMITTED by EMPLOYEE">
+        <name>
+          <text>Permit SUBMITTED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="Start trip">
+        <name>
+          <text>Start trip</text>
+        </name>
+      </transition>
+      <transition id="Request Payment">
+        <name>
+          <text>Request Payment</text>
+        </name>
+      </transition>
+      <transition id="Request For Payment APPROVED by ADMINISTRATION">
+        <name>
+          <text>Request For Payment APPROVED by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by ADMINISTRATION">
+        <name>
+          <text>Declaration REJECTED by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Payment Handled">
+        <name>
+          <text>Payment Handled</text>
+        </name>
+      </transition>
+      <transition id="Permit APPROVED by ADMINISTRATION">
+        <name>
+          <text>Permit APPROVED by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Request For Payment SUBMITTED by EMPLOYEE">
+        <name>
+          <text>Request For Payment SUBMITTED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="Declaration FINAL_APPROVED by SUPERVISOR">
+        <name>
+          <text>Declaration FINAL_APPROVED by SUPERVISOR</text>
+        </name>
+      </transition>
+      <transition id="Permit APPROVED by BUDGET OWNER">
+        <name>
+          <text>Permit APPROVED by BUDGET OWNER</text>
+        </name>
+      </transition>
+      <transition id="Request For Payment FINAL_APPROVED by SUPERVISOR">
+        <name>
+          <text>Request For Payment FINAL_APPROVED by SUPERVISOR</text>
+        </name>
+      </transition>
+      <transition id="Permit FINAL_APPROVED by SUPERVISOR">
+        <name>
+          <text>Permit FINAL_APPROVED by SUPERVISOR</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by EMPLOYEE">
+        <name>
+          <text>Declaration REJECTED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="Declaration SUBMITTED by EMPLOYEE">
+        <name>
+          <text>Declaration SUBMITTED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <arc id="-9223363287620353918" source="Declaration FINAL_APPROVED by SUPERVISOR" target="end"/>
+      <arc id="8749234421894" source="Declaration REJECTED by EMPLOYEE" target="end"/>
+      <arc id="-9223363287620354037" source="start" target="Permit SUBMITTED by EMPLOYEE"/>
+      <arc id="-9223363287620379893" source="({'Permit APPROVED by BUDGET OWNER'}, {'Permit FINAL_APPROVED by SUPERVISOR'})" target="Permit FINAL_APPROVED by SUPERVISOR"/>
+      <arc id="8749234421908" source="End trip" target="end"/>
+      <arc id="-9223363287620353897" source="Payment Handled" target="end"/>
+      <arc id="8749234395933" source="Permit APPROVED by BUDGET OWNER" target="({'Permit APPROVED by BUDGET OWNER'}, {'Permit FINAL_APPROVED by SUPERVISOR'})"/>
+      <arc id="-9223363287620379872" source="Permit APPROVED by ADMINISTRATION" target="({'Permit APPROVED by ADMINISTRATION'}, {'Permit APPROVED by BUDGET OWNER'})"/>
+      <arc id="8749234421922" source="Permit APPROVED by BUDGET OWNER" target="end"/>
+      <arc id="-9223363287620353876" source="Permit FINAL_APPROVED by SUPERVISOR" target="end"/>
+      <arc id="-9223363287620354002" source="start" target="Start trip"/>
+      <arc id="-9223363287620379858" source="({'Permit APPROVED by ADMINISTRATION'}, {'Permit APPROVED by BUDGET OWNER'})" target="Permit APPROVED by BUDGET OWNER"/>
+      <arc id="-9223363287620353869" source="Send Reminder" target="end"/>
+      <arc id="-9223363287620353862" source="Permit APPROVED by ADMINISTRATION" target="end"/>
+      <arc id="8749234421964" source="Permit APPROVED by ADMINISTRATION" target="({'Permit APPROVED by ADMINISTRATION'}, {'Permit FINAL_APPROVED by SUPERVISOR'})"/>
+      <arc id="-9223363287620353841" source="({'Permit APPROVED by ADMINISTRATION'}, {'Permit FINAL_APPROVED by SUPERVISOR'})" target="Permit FINAL_APPROVED by SUPERVISOR"/>
+      <arc id="8749234421845" source="Declaration APPROVED by ADMINISTRATION" target="end"/>
+      <arc id="-9223363287620353820" source="Start trip" target="({'Start trip'}, {'End trip'})"/>
+      <arc id="-9223363287620353813" source="({'Start trip'}, {'End trip'})" target="End trip"/>
+      <arc id="-9223363287620353939" source="Request Payment" target="end"/>
+      <arc id="-9223363287620353925" source="Permit SUBMITTED by EMPLOYEE" target="end"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="end">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

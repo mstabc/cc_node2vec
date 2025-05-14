@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by BUDGET OWNER'}, {'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})">
+        <name>
+          <text>({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by BUDGET OWNER'}, {'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})</text>
+        </name>
+      </place>
+      <place id="({'Declaration APPROVED by BUDGET OWNER', 'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})">
+        <name>
+          <text>({'Declaration APPROVED by BUDGET OWNER', 'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})</text>
+        </name>
+      </place>
+      <place id="end">
+        <name>
+          <text>end</text>
+        </name>
+      </place>
+      <place id="({'Declaration APPROVED by ADMINISTRATION'}, {'Declaration REJECTED by BUDGET OWNER', 'Declaration APPROVED by BUDGET OWNER'})">
+        <name>
+          <text>({'Declaration APPROVED by ADMINISTRATION'}, {'Declaration REJECTED by BUDGET OWNER', 'Declaration APPROVED by BUDGET OWNER'})</text>
+        </name>
+      </place>
+      <place id="({'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration APPROVED by PRE_APPROVER'})">
+        <name>
+          <text>({'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration APPROVED by PRE_APPROVER'})</text>
+        </name>
+      </place>
+      <place id="({'Declaration FOR_APPROVAL by PRE_APPROVER', 'Request Payment', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})">
+        <name>
+          <text>({'Declaration FOR_APPROVAL by PRE_APPROVER', 'Request Payment', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})</text>
+        </name>
+      </place>
+      <place id="({'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})">
+        <name>
+          <text>({'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})</text>
+        </name>
+      </place>
+      <place id="({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION'}, {'Declaration REJECTED by BUDGET OWNER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})">
+        <name>
+          <text>({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION'}, {'Declaration REJECTED by BUDGET OWNER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})</text>
+        </name>
+      </place>
+      <place id="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by PRE_APPROVER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})">
+        <name>
+          <text>({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by PRE_APPROVER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})</text>
+        </name>
+      </place>
+      <place id="start">
+        <name>
+          <text>start</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})">
+        <name>
+          <text>({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})</text>
+        </name>
+      </place>
+      <place id="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})">
+        <name>
+          <text>({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})</text>
+        </name>
+      </place>
+      <place id="({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by MISSING'}, {'Declaration SUBMITTED by EMPLOYEE'})">
+        <name>
+          <text>({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by MISSING'}, {'Declaration SUBMITTED by EMPLOYEE'})</text>
+        </name>
+      </place>
+      <transition id="Declaration FOR_APPROVAL by ADMINISTRATION">
+        <name>
+          <text>Declaration FOR_APPROVAL by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Declaration FINAL_APPROVED by SUPERVISOR">
+        <name>
+          <text>Declaration FINAL_APPROVED by SUPERVISOR</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by PRE_APPROVER">
+        <name>
+          <text>Declaration REJECTED by PRE_APPROVER</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by SUPERVISOR">
+        <name>
+          <text>Declaration REJECTED by SUPERVISOR</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by EMPLOYEE">
+        <name>
+          <text>Declaration REJECTED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="Declaration FOR_APPROVAL by PRE_APPROVER">
+        <name>
+          <text>Declaration FOR_APPROVAL by PRE_APPROVER</text>
+        </name>
+      </transition>
+      <transition id="Declaration SAVED by EMPLOYEE">
+        <name>
+          <text>Declaration SAVED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="Declaration APPROVED by PRE_APPROVER">
+        <name>
+          <text>Declaration APPROVED by PRE_APPROVER</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by BUDGET OWNER">
+        <name>
+          <text>Declaration REJECTED by BUDGET OWNER</text>
+        </name>
+      </transition>
+      <transition id="Request Payment">
+        <name>
+          <text>Request Payment</text>
+        </name>
+      </transition>
+      <transition id="Declaration FOR_APPROVAL by SUPERVISOR">
+        <name>
+          <text>Declaration FOR_APPROVAL by SUPERVISOR</text>
+        </name>
+      </transition>
+      <transition id="Declaration APPROVED by ADMINISTRATION">
+        <name>
+          <text>Declaration APPROVED by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Declaration SUBMITTED by EMPLOYEE">
+        <name>
+          <text>Declaration SUBMITTED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by ADMINISTRATION">
+        <name>
+          <text>Declaration REJECTED by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Payment Handled">
+        <name>
+          <text>Payment Handled</text>
+        </name>
+      </transition>
+      <transition id="Declaration APPROVED by BUDGET OWNER">
+        <name>
+          <text>Declaration APPROVED by BUDGET OWNER</text>
+        </name>
+      </transition>
+      <transition id="Declaration REJECTED by MISSING">
+        <name>
+          <text>Declaration REJECTED by MISSING</text>
+        </name>
+      </transition>
+      <arc id="8755975102973" source="Declaration REJECTED by BUDGET OWNER" target="({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="-9223363280879673852" source="start" target="Declaration SAVED by EMPLOYEE"/>
+      <arc id="8755975102728" source="({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by BUDGET OWNER'}, {'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})" target="Declaration FINAL_APPROVED by SUPERVISOR"/>
+      <arc id="-9223363280879672951" source="Declaration FOR_APPROVAL by SUPERVISOR" target="({'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})"/>
+      <arc id="-9223363280879701111" source="Declaration REJECTED by ADMINISTRATION" target="({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="8755975074568" source="Declaration REJECTED by SUPERVISOR" target="({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="8755975074575" source="({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})" target="Request Payment"/>
+      <arc id="-9223363280879672944" source="({'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})" target="Payment Handled"/>
+      <arc id="-9223363280879673838" source="start" target="Declaration SUBMITTED by EMPLOYEE"/>
+      <arc id="-9223363280879701230" source="({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})" target="Declaration REJECTED by EMPLOYEE"/>
+      <arc id="8755975102100" source="Declaration REJECTED by SUPERVISOR" target="end"/>
+      <arc id="8755975102868" source="({'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})" target="Declaration REJECTED by MISSING"/>
+      <arc id="-9223363280879673063" source="Declaration SUBMITTED by EMPLOYEE" target="({'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration APPROVED by PRE_APPROVER'})"/>
+      <arc id="-9223363280879701223" source="Declaration FINAL_APPROVED by SUPERVISOR" target="({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="8755975102749" source="Declaration APPROVED by BUDGET OWNER" target="({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by BUDGET OWNER'}, {'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})"/>
+      <arc id="-9223363280879672930" source="Declaration REJECTED by BUDGET OWNER" target="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by PRE_APPROVER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="-9223363280879701216" source="Declaration REJECTED by BUDGET OWNER" target="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="8755975102114" source="Declaration REJECTED by BUDGET OWNER" target="({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by MISSING'}, {'Declaration SUBMITTED by EMPLOYEE'})"/>
+      <arc id="-9223363280879672923" source="Payment Handled" target="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by PRE_APPROVER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="-9223363280879673049" source="({'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration APPROVED by PRE_APPROVER'})" target="Declaration FOR_APPROVAL by PRE_APPROVER"/>
+      <arc id="-9223363280879701209" source="Payment Handled" target="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="8755975102121" source="Declaration REJECTED by MISSING" target="({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by MISSING'}, {'Declaration SUBMITTED by EMPLOYEE'})"/>
+      <arc id="8755975074603" source="Declaration REJECTED by ADMINISTRATION" target="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="-9223363280879701202" source="Declaration SAVED by EMPLOYEE" target="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="8755975102896" source="Declaration REJECTED by PRE_APPROVER" target="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by PRE_APPROVER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="8755975102002" source="Declaration REJECTED by EMPLOYEE" target="end"/>
+      <arc id="8755975074610" source="Declaration REJECTED by SUPERVISOR" target="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="8755975074617" source="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})" target="Request Payment"/>
+      <arc id="-9223363280879673670" source="({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by MISSING'}, {'Declaration SUBMITTED by EMPLOYEE'})" target="Declaration SUBMITTED by EMPLOYEE"/>
+      <arc id="-9223363280879673028" source="({'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration APPROVED by PRE_APPROVER'})" target="Declaration APPROVED by ADMINISTRATION"/>
+      <arc id="8755975102910" source="Declaration REJECTED by ADMINISTRATION" target="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by PRE_APPROVER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="8755975074624" source="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})" target="Declaration REJECTED by EMPLOYEE"/>
+      <arc id="-9223363280879673021" source="({'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration APPROVED by PRE_APPROVER'})" target="Declaration FOR_APPROVAL by SUPERVISOR"/>
+      <arc id="8755975102917" source="Declaration REJECTED by SUPERVISOR" target="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by PRE_APPROVER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="8755975102023" source="Declaration REJECTED by ADMINISTRATION" target="end"/>
+      <arc id="-9223363280879673014" source="({'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration APPROVED by PRE_APPROVER'})" target="Declaration APPROVED by PRE_APPROVER"/>
+      <arc id="-9223363280879701174" source="Declaration APPROVED by BUDGET OWNER" target="({'Declaration APPROVED by BUDGET OWNER', 'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})"/>
+      <arc id="8755975102924" source="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by PRE_APPROVER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})" target="Request Payment"/>
+      <arc id="8755975074638" source="Declaration SUBMITTED by EMPLOYEE" target="({'Declaration APPROVED by BUDGET OWNER', 'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})"/>
+      <arc id="-9223363280879672881" source="({'Declaration REJECTED by BUDGET OWNER', 'Payment Handled', 'Declaration REJECTED by PRE_APPROVER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})" target="Declaration REJECTED by EMPLOYEE"/>
+      <arc id="-9223363280879701167" source="({'Declaration APPROVED by BUDGET OWNER', 'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})" target="Declaration FOR_APPROVAL by PRE_APPROVER"/>
+      <arc id="8755975102163" source="Declaration APPROVED by ADMINISTRATION" target="({'Declaration APPROVED by ADMINISTRATION'}, {'Declaration REJECTED by BUDGET OWNER', 'Declaration APPROVED by BUDGET OWNER'})"/>
+      <arc id="8755975102931" source="({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by BUDGET OWNER'}, {'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})" target="Declaration REJECTED by SUPERVISOR"/>
+      <arc id="8755975102805" source="Declaration FOR_APPROVAL by PRE_APPROVER" target="({'Declaration FOR_APPROVAL by PRE_APPROVER', 'Request Payment', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})"/>
+      <arc id="8755975074645" source="({'Declaration APPROVED by BUDGET OWNER', 'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})" target="Declaration FINAL_APPROVED by SUPERVISOR"/>
+      <arc id="-9223363280879673000" source="Request Payment" target="({'Declaration FOR_APPROVAL by PRE_APPROVER', 'Request Payment', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})"/>
+      <arc id="8755975102170" source="({'Declaration APPROVED by ADMINISTRATION'}, {'Declaration REJECTED by BUDGET OWNER', 'Declaration APPROVED by BUDGET OWNER'})" target="Declaration REJECTED by BUDGET OWNER"/>
+      <arc id="8755975074652" source="({'Declaration APPROVED by BUDGET OWNER', 'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})" target="Declaration FOR_APPROVAL by SUPERVISOR"/>
+      <arc id="-9223363280879673635" source="({'Declaration APPROVED by ADMINISTRATION'}, {'Declaration REJECTED by BUDGET OWNER', 'Declaration APPROVED by BUDGET OWNER'})" target="Declaration APPROVED by BUDGET OWNER"/>
+      <arc id="-9223363280879672867" source="Declaration APPROVED by PRE_APPROVER" target="({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION'}, {'Declaration REJECTED by BUDGET OWNER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})"/>
+      <arc id="-9223363280879672993" source="Declaration FOR_APPROVAL by SUPERVISOR" target="({'Declaration FOR_APPROVAL by PRE_APPROVER', 'Request Payment', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})"/>
+      <arc id="8755975102051" source="Declaration REJECTED by MISSING" target="end"/>
+      <arc id="-9223363280879672860" source="Declaration APPROVED by ADMINISTRATION" target="({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION'}, {'Declaration REJECTED by BUDGET OWNER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})"/>
+      <arc id="8755975074659" source="({'Declaration APPROVED by BUDGET OWNER', 'Declaration SUBMITTED by EMPLOYEE'}, {'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})" target="Declaration REJECTED by SUPERVISOR"/>
+      <arc id="-9223363280879673754" source="Payment Handled" target="end"/>
+      <arc id="-9223363280879672853" source="({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION'}, {'Declaration REJECTED by BUDGET OWNER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})" target="Declaration REJECTED by BUDGET OWNER"/>
+      <arc id="-9223363280879673747" source="Declaration SAVED by EMPLOYEE" target="end"/>
+      <arc id="-9223363280879672979" source="({'Declaration FOR_APPROVAL by PRE_APPROVER', 'Request Payment', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})" target="Payment Handled"/>
+      <arc id="8755975102959" source="({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION'}, {'Declaration REJECTED by BUDGET OWNER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})" target="Declaration FINAL_APPROVED by SUPERVISOR"/>
+      <arc id="8755975102833" source="({'Declaration FOR_APPROVAL by PRE_APPROVER', 'Request Payment', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})" target="Declaration REJECTED by MISSING"/>
+      <arc id="-9223363280879672846" source="({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by ADMINISTRATION'}, {'Declaration REJECTED by BUDGET OWNER', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})" target="Declaration REJECTED by SUPERVISOR"/>
+      <arc id="8755975074673" source="Declaration SAVED by EMPLOYEE" target="({'Declaration REJECTED by BUDGET OWNER', 'Declaration REJECTED by ADMINISTRATION', 'Declaration SAVED by EMPLOYEE', 'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'}, {'Request Payment', 'Declaration REJECTED by EMPLOYEE'})"/>
+      <arc id="8755975102840" source="Declaration FINAL_APPROVED by SUPERVISOR" target="({'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})"/>
+      <arc id="-9223363280879672965" source="Declaration FOR_APPROVAL by PRE_APPROVER" target="({'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration FOR_APPROVAL by PRE_APPROVER', 'Declaration FOR_APPROVAL by SUPERVISOR'}, {'Payment Handled', 'Declaration REJECTED by MISSING'})"/>
+      <arc id="8755975102205" source="Declaration APPROVED by PRE_APPROVER" target="({'Declaration APPROVED by PRE_APPROVER', 'Declaration APPROVED by BUDGET OWNER'}, {'Declaration FINAL_APPROVED by SUPERVISOR', 'Declaration REJECTED by SUPERVISOR'})"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="end">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

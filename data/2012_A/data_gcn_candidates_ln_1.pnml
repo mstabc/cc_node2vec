@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="2&#10;c0.83&#10;a1.00">
+        <name>
+          <text>2
+c0.83
+a1.00</text>
+        </name>
+      </place>
+      <place id="4&#10;c0.31&#10;a1.00">
+        <name>
+          <text>4
+c0.31
+a1.00</text>
+        </name>
+      </place>
+      <place id="7&#10;c0.43&#10;a1.00">
+        <name>
+          <text>7
+c0.43
+a1.00</text>
+        </name>
+      </place>
+      <place id="0&#10;c1.00&#10;a1.00">
+        <name>
+          <text>0
+c1.00
+a1.00</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="6&#10;c0.13&#10;a1.00">
+        <name>
+          <text>6
+c0.13
+a1.00</text>
+        </name>
+      </place>
+      <place id="5&#10;c0.47&#10;a1.00">
+        <name>
+          <text>5
+c0.47
+a1.00</text>
+        </name>
+      </place>
+      <place id="3&#10;c0.17&#10;a1.00">
+        <name>
+          <text>3
+c0.17
+a1.00</text>
+        </name>
+      </place>
+      <place id="8&#10;c0.97&#10;a1.00">
+        <name>
+          <text>8
+c0.97
+a1.00</text>
+        </name>
+      </place>
+      <place id="1&#10;c1.00&#10;a1.00">
+        <name>
+          <text>1
+c1.00
+a1.00</text>
+        </name>
+      </place>
+      <transition id="A_PREACCEPTED">
+        <name>
+          <text>A_PREACCEPTED</text>
+        </name>
+      </transition>
+      <transition id="A_ACCEPTED">
+        <name>
+          <text>A_ACCEPTED</text>
+        </name>
+      </transition>
+      <transition id="A_DECLINED">
+        <name>
+          <text>A_DECLINED</text>
+        </name>
+      </transition>
+      <transition id="A_APPROVED">
+        <name>
+          <text>A_APPROVED</text>
+        </name>
+      </transition>
+      <transition id="st2">
+        <name>
+          <text>st2</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="1ee95ec2-ade0-48be-80fb-94688e9d7f83"/>
+      </transition>
+      <transition id="|">
+        <name>
+          <text>|</text>
+        </name>
+      </transition>
+      <transition id="A_CANCELLED">
+        <name>
+          <text>A_CANCELLED</text>
+        </name>
+      </transition>
+      <transition id="A_PARTLYSUBMITTED">
+        <name>
+          <text>A_PARTLYSUBMITTED</text>
+        </name>
+      </transition>
+      <transition id="A_ACTIVATED">
+        <name>
+          <text>A_ACTIVATED</text>
+        </name>
+      </transition>
+      <transition id="A_REGISTERED">
+        <name>
+          <text>A_REGISTERED</text>
+        </name>
+      </transition>
+      <transition id="&gt;">
+        <name>
+          <text>&gt;</text>
+        </name>
+      </transition>
+      <transition id="A_SUBMITTED">
+        <name>
+          <text>A_SUBMITTED</text>
+        </name>
+      </transition>
+      <transition id="A_FINALIZED">
+        <name>
+          <text>A_FINALIZED</text>
+        </name>
+      </transition>
+      <transition id="st1">
+        <name>
+          <text>st1</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="6b5bebf2-c9b3-4413-8748-052e4e1b2cf6"/>
+      </transition>
+      <transition id="st0">
+        <name>
+          <text>st0</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="1b8b48bd-0b75-424d-ac8e-601fc1fe5c01"/>
+      </transition>
+      <arc id="8729834625414" source="3&#10;c0.17&#10;a1.00" target="st0"/>
+      <arc id="-9223363307020150391" source="st0" target="5&#10;c0.47&#10;a1.00"/>
+      <arc id="-9223363307020150384" source="A_CANCELLED" target="5&#10;c0.47&#10;a1.00"/>
+      <arc id="8729834625428" source="A_DECLINED" target="5&#10;c0.47&#10;a1.00"/>
+      <arc id="-9223363307020150377" source="5&#10;c0.47&#10;a1.00" target="|"/>
+      <arc id="8729834625442" source="6&#10;c0.13&#10;a1.00" target="st1"/>
+      <arc id="-9223363307020150363" source="st1" target="5&#10;c0.47&#10;a1.00"/>
+      <arc id="8729834625323" source="0&#10;c1.00&#10;a1.00" target="A_SUBMITTED"/>
+      <arc id="-9223363307020150356" source="A_REGISTERED" target="6&#10;c0.13&#10;a1.00"/>
+      <arc id="-9223363307020150482" source="A_SUBMITTED" target="1&#10;c1.00&#10;a1.00"/>
+      <arc id="8729834625456" source="A_FINALIZED" target="6&#10;c0.13&#10;a1.00"/>
+      <arc id="-9223363307020150349" source="6&#10;c0.13&#10;a1.00" target="A_APPROVED"/>
+      <arc id="8729834625463" source="6&#10;c0.13&#10;a1.00" target="A_ACTIVATED"/>
+      <arc id="8729834625337" source="&gt;" target="0&#10;c1.00&#10;a1.00"/>
+      <arc id="8729834625470" source="A_ACTIVATED" target="7&#10;c0.43&#10;a1.00"/>
+      <arc id="-9223363307020150335" source="7&#10;c0.43&#10;a1.00" target="A_APPROVED"/>
+      <arc id="8729834625484" source="8&#10;c0.97&#10;a1.00" target="st2"/>
+      <arc id="-9223363307020150321" source="st2" target="5&#10;c0.47&#10;a1.00"/>
+      <arc id="-9223363307020150447" source="1&#10;c1.00&#10;a1.00" target="A_PARTLYSUBMITTED"/>
+      <arc id="-9223363307020150314" source="A_APPROVED" target="8&#10;c0.97&#10;a1.00"/>
+      <arc id="-9223363307020150440" source="A_PARTLYSUBMITTED" target="2&#10;c0.83&#10;a1.00"/>
+      <arc id="8729834625498" source="8&#10;c0.97&#10;a1.00" target="A_REGISTERED"/>
+      <arc id="8729834625372" source="2&#10;c0.83&#10;a1.00" target="A_CANCELLED"/>
+      <arc id="-9223363307020150433" source="2&#10;c0.83&#10;a1.00" target="A_DECLINED"/>
+      <arc id="8729834625379" source="2&#10;c0.83&#10;a1.00" target="A_PREACCEPTED"/>
+      <arc id="8729834625386" source="A_PREACCEPTED" target="3&#10;c0.17&#10;a1.00"/>
+      <arc id="-9223363307020150419" source="3&#10;c0.17&#10;a1.00" target="A_CANCELLED"/>
+      <arc id="8729834625393" source="3&#10;c0.17&#10;a1.00" target="A_ACCEPTED"/>
+      <arc id="8729834625400" source="A_ACCEPTED" target="4&#10;c0.31&#10;a1.00"/>
+      <arc id="-9223363307020150405" source="4&#10;c0.31&#10;a1.00" target="A_FINALIZED"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="5&#10;c0.47&#10;a1.00">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

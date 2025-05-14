@@ -1,0 +1,316 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="17&#10;c0.34&#10;a0.02">
+        <name>
+          <text>17
+c0.34
+a0.02</text>
+        </name>
+      </place>
+      <place id="12&#10;c0.94&#10;a0.06">
+        <name>
+          <text>12
+c0.94
+a0.06</text>
+        </name>
+      </place>
+      <place id="7&#10;c0.79&#10;a1.00">
+        <name>
+          <text>7
+c0.79
+a1.00</text>
+        </name>
+      </place>
+      <place id="0&#10;c0.07&#10;a1.00">
+        <name>
+          <text>0
+c0.07
+a1.00</text>
+        </name>
+      </place>
+      <place id="11&#10;c0.87&#10;a1.00">
+        <name>
+          <text>11
+c0.87
+a1.00</text>
+        </name>
+      </place>
+      <place id="6&#10;c0.27&#10;a1.00">
+        <name>
+          <text>6
+c0.27
+a1.00</text>
+        </name>
+      </place>
+      <place id="2&#10;c0.34&#10;a1.00">
+        <name>
+          <text>2
+c0.34
+a1.00</text>
+        </name>
+      </place>
+      <place id="4&#10;c1.00&#10;a1.00">
+        <name>
+          <text>4
+c1.00
+a1.00</text>
+        </name>
+      </place>
+      <place id="14&#10;c0.48&#10;a0.27">
+        <name>
+          <text>14
+c0.48
+a0.27</text>
+        </name>
+      </place>
+      <place id="5&#10;c0.93&#10;a1.00">
+        <name>
+          <text>5
+c0.93
+a1.00</text>
+        </name>
+      </place>
+      <place id="1&#10;c0.78&#10;a1.00">
+        <name>
+          <text>1
+c0.78
+a1.00</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="8&#10;c0.57&#10;a1.00">
+        <name>
+          <text>8
+c0.57
+a1.00</text>
+        </name>
+      </place>
+      <place id="13&#10;c0.99&#10;a0.48">
+        <name>
+          <text>13
+c0.99
+a0.48</text>
+        </name>
+      </place>
+      <place id="10&#10;c0.80&#10;a1.00">
+        <name>
+          <text>10
+c0.80
+a1.00</text>
+        </name>
+      </place>
+      <place id="3&#10;c0.29&#10;a1.00">
+        <name>
+          <text>3
+c0.29
+a1.00</text>
+        </name>
+      </place>
+      <transition id="st5">
+        <name>
+          <text>st5</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="626b925f-0a53-4b62-b080-f787d5286d79"/>
+      </transition>
+      <transition id="st2">
+        <name>
+          <text>st2</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="a24d3c7a-7879-43d0-9389-6e0478fe4006"/>
+      </transition>
+      <transition id="|">
+        <name>
+          <text>|</text>
+        </name>
+      </transition>
+      <transition id="Request For Payment REJECTED by ADMINISTRATION">
+        <name>
+          <text>Request For Payment REJECTED by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Request For Payment APPROVED by ADMINISTRATION">
+        <name>
+          <text>Request For Payment APPROVED by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Request For Payment REJECTED by EMPLOYEE">
+        <name>
+          <text>Request For Payment REJECTED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="st3">
+        <name>
+          <text>st3</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="9ba1dffe-1be2-405c-b180-6b08abad2074"/>
+      </transition>
+      <transition id="Permit APPROVED by BUDGET OWNER">
+        <name>
+          <text>Permit APPROVED by BUDGET OWNER</text>
+        </name>
+      </transition>
+      <transition id="Permit FINAL_APPROVED by SUPERVISOR">
+        <name>
+          <text>Permit FINAL_APPROVED by SUPERVISOR</text>
+        </name>
+      </transition>
+      <transition id="Permit APPROVED by ADMINISTRATION">
+        <name>
+          <text>Permit APPROVED by ADMINISTRATION</text>
+        </name>
+      </transition>
+      <transition id="Permit APPROVED by SUPERVISOR">
+        <name>
+          <text>Permit APPROVED by SUPERVISOR</text>
+        </name>
+      </transition>
+      <transition id="Request For Payment SUBMITTED by EMPLOYEE">
+        <name>
+          <text>Request For Payment SUBMITTED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="st4">
+        <name>
+          <text>st4</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="bca3d410-7d9c-44c2-81c1-26ca4e83e520"/>
+      </transition>
+      <transition id="Permit SUBMITTED by EMPLOYEE">
+        <name>
+          <text>Permit SUBMITTED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="st0">
+        <name>
+          <text>st0</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="c30bc840-9e93-4299-86da-9d833bca9397"/>
+      </transition>
+      <transition id="&gt;">
+        <name>
+          <text>&gt;</text>
+        </name>
+      </transition>
+      <transition id="st1">
+        <name>
+          <text>st1</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="597872fd-46c4-450a-ae0e-4bcca48d3c19"/>
+      </transition>
+      <transition id="Request For Payment FINAL_APPROVED by SUPERVISOR">
+        <name>
+          <text>Request For Payment FINAL_APPROVED by SUPERVISOR</text>
+        </name>
+      </transition>
+      <transition id="Permit APPROVED by PRE_APPROVER">
+        <name>
+          <text>Permit APPROVED by PRE_APPROVER</text>
+        </name>
+      </transition>
+      <transition id="Payment Handled">
+        <name>
+          <text>Payment Handled</text>
+        </name>
+      </transition>
+      <transition id="Request For Payment APPROVED by PRE_APPROVER">
+        <name>
+          <text>Request For Payment APPROVED by PRE_APPROVER</text>
+        </name>
+      </transition>
+      <transition id="Request For Payment APPROVED by SUPERVISOR">
+        <name>
+          <text>Request For Payment APPROVED by SUPERVISOR</text>
+        </name>
+      </transition>
+      <transition id="Request Payment">
+        <name>
+          <text>Request Payment</text>
+        </name>
+      </transition>
+      <transition id="Permit FINAL_APPROVED by DIRECTOR">
+        <name>
+          <text>Permit FINAL_APPROVED by DIRECTOR</text>
+        </name>
+      </transition>
+      <transition id="Permit REJECTED by EMPLOYEE">
+        <name>
+          <text>Permit REJECTED by EMPLOYEE</text>
+        </name>
+      </transition>
+      <transition id="Request For Payment APPROVED by BUDGET OWNER">
+        <name>
+          <text>Request For Payment APPROVED by BUDGET OWNER</text>
+        </name>
+      </transition>
+      <arc id="-9223363242993750654" source="4&#10;c1.00&#10;a1.00" target="Permit FINAL_APPROVED by DIRECTOR"/>
+      <arc id="-9223363242988837758" source="7&#10;c0.79&#10;a1.00" target="st1"/>
+      <arc id="-9223363242993755900" source="0&#10;c0.07&#10;a1.00" target="Permit FINAL_APPROVED by SUPERVISOR"/>
+      <arc id="-9223363242988837884" source="Request For Payment SUBMITTED by EMPLOYEE" target="13&#10;c0.99&#10;a0.48"/>
+      <arc id="8793861025158" source="5&#10;c0.93&#10;a1.00" target="Permit APPROVED by BUDGET OWNER"/>
+      <arc id="8793865938054" source="7&#10;c0.79&#10;a1.00" target="st3"/>
+      <arc id="8793865937928" source="13&#10;c0.99&#10;a0.48" target="Request For Payment APPROVED by ADMINISTRATION"/>
+      <arc id="-9223363242993750647" source="Permit APPROVED by ADMINISTRATION" target="5&#10;c0.93&#10;a1.00"/>
+      <arc id="-9223363242841103349" source="2&#10;c0.34&#10;a1.00" target="Permit REJECTED by EMPLOYEE"/>
+      <arc id="-9223363242988837765" source="1&#10;c0.78&#10;a1.00" target="Request For Payment SUBMITTED by EMPLOYEE"/>
+      <arc id="-9223363242993750640" source="5&#10;c0.93&#10;a1.00" target="st5"/>
+      <arc id="-9223363242988837870" source="14&#10;c0.48&#10;a0.27" target="st2"/>
+      <arc id="8793861025172" source="st5" target="0&#10;c0.07&#10;a1.00"/>
+      <arc id="8793861019926" source="Request For Payment APPROVED by BUDGET OWNER" target="0&#10;c0.07&#10;a1.00"/>
+      <arc id="-9223363242993750633" source="6&#10;c0.27&#10;a1.00" target="Request For Payment REJECTED by EMPLOYEE"/>
+      <arc id="8793865937942" source="st2" target="0&#10;c0.07&#10;a1.00"/>
+      <arc id="8793861025179" source="6&#10;c0.27&#10;a1.00" target="Request For Payment FINAL_APPROVED by SUPERVISOR"/>
+      <arc id="8793865937949" source="Request For Payment APPROVED by ADMINISTRATION" target="14&#10;c0.48&#10;a0.27"/>
+      <arc id="-9223363242993750626" source="6&#10;c0.27&#10;a1.00" target="Request For Payment APPROVED by PRE_APPROVER"/>
+      <arc id="-9223363242988837856" source="14&#10;c0.48&#10;a0.27" target="Request For Payment APPROVED by SUPERVISOR"/>
+      <arc id="8793865961634" source="3&#10;c0.29&#10;a1.00" target="Request For Payment SUBMITTED by EMPLOYEE"/>
+      <arc id="8793861019940" source="Request For Payment REJECTED by ADMINISTRATION" target="0&#10;c0.07&#10;a1.00"/>
+      <arc id="-9223363242993750619" source="Request For Payment SUBMITTED by EMPLOYEE" target="6&#10;c0.27&#10;a1.00"/>
+      <arc id="-9223363242993755865" source="Permit APPROVED by BUDGET OWNER" target="0&#10;c0.07&#10;a1.00"/>
+      <arc id="8793861025193" source="7&#10;c0.79&#10;a1.00" target="|"/>
+      <arc id="-9223363242993750612" source="Request For Payment REJECTED by EMPLOYEE" target="7&#10;c0.79&#10;a1.00"/>
+      <arc id="8793865960368" source="2&#10;c0.34&#10;a1.00" target="Permit APPROVED by SUPERVISOR"/>
+      <arc id="8793861025200" source="Payment Handled" target="7&#10;c0.79&#10;a1.00"/>
+      <arc id="-9223363242993750605" source="6&#10;c0.27&#10;a1.00" target="Request For Payment REJECTED by ADMINISTRATION"/>
+      <arc id="-9223363242988837828" source="st3" target="7&#10;c0.79&#10;a1.00"/>
+      <arc id="8793861020094" source="Permit APPROVED by PRE_APPROVER" target="0&#10;c0.07&#10;a1.00"/>
+      <arc id="-9223363242993750591" source="8&#10;c0.57&#10;a1.00" target="Request For Payment APPROVED by BUDGET OWNER"/>
+      <arc id="-9223363242993755704" source="1&#10;c0.78&#10;a1.00" target="Permit SUBMITTED by EMPLOYEE"/>
+      <arc id="-9223363242993750584" source="Permit APPROVED by BUDGET OWNER" target="8&#10;c0.57&#10;a1.00"/>
+      <arc id="8793861025228" source="st1" target="10&#10;c0.80&#10;a1.00"/>
+      <arc id="-9223363242988837807" source="6&#10;c0.27&#10;a1.00" target="st4"/>
+      <arc id="-9223363242993750661" source="Request For Payment FINAL_APPROVED by SUPERVISOR" target="0&#10;c0.07&#10;a1.00"/>
+      <arc id="8793865938005" source="st4" target="17&#10;c0.34&#10;a0.02"/>
+      <arc id="8793865938012" source="Request For Payment APPROVED by PRE_APPROVER" target="17&#10;c0.34&#10;a0.02"/>
+      <arc id="-9223363242993750563" source="Request Payment" target="11&#10;c0.87&#10;a1.00"/>
+      <arc id="-9223363242988837793" source="17&#10;c0.34&#10;a0.02" target="Request For Payment FINAL_APPROVED by SUPERVISOR"/>
+      <arc id="8793861020129" source="2&#10;c0.34&#10;a1.00" target="st0"/>
+      <arc id="8793861020003" source="st0" target="0&#10;c0.07&#10;a1.00"/>
+      <arc id="-9223363242993750556" source="10&#10;c0.80&#10;a1.00" target="Request Payment"/>
+      <arc id="-9223363242988814234" source="Permit APPROVED by ADMINISTRATION" target="3&#10;c0.29&#10;a1.00"/>
+      <arc id="8793861020010" source="Permit SUBMITTED by EMPLOYEE" target="2&#10;c0.34&#10;a1.00"/>
+      <arc id="-9223363242993750549" source="Request For Payment APPROVED by SUPERVISOR" target="10&#10;c0.80&#10;a1.00"/>
+      <arc id="8793865962991" source="Permit APPROVED by SUPERVISOR" target="4&#10;c1.00&#10;a1.00"/>
+      <arc id="-9223363242993750542" source="12&#10;c0.94&#10;a0.06" target="Permit SUBMITTED by EMPLOYEE"/>
+      <arc id="-9223363242988837772" source="Permit REJECTED by EMPLOYEE" target="1&#10;c0.78&#10;a1.00"/>
+      <arc id="8793861020150" source="&gt;" target="1&#10;c0.78&#10;a1.00"/>
+      <arc id="8793861025270" source="Permit REJECTED by EMPLOYEE" target="12&#10;c0.94&#10;a0.06"/>
+      <arc id="8793861025144" source="Request For Payment APPROVED by ADMINISTRATION" target="0&#10;c0.07&#10;a1.00"/>
+      <arc id="-9223363242993750535" source="11&#10;c0.87&#10;a1.00" target="Payment Handled"/>
+      <arc id="-9223363242993755781" source="2&#10;c0.34&#10;a1.00" target="Permit APPROVED by ADMINISTRATION"/>
+      <arc id="8793865938040" source="Permit FINAL_APPROVED by DIRECTOR" target="1&#10;c0.78&#10;a1.00"/>
+      <arc id="8793865956861" source="2&#10;c0.34&#10;a1.00" target="Permit APPROVED by PRE_APPROVER"/>
+      <arc id="8793865938047" source="Permit FINAL_APPROVED by SUPERVISOR" target="7&#10;c0.79&#10;a1.00"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="7&#10;c0.79&#10;a1.00">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

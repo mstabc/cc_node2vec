@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="6&#10;c0.90&#10;a0.96">
+        <name>
+          <text>6
+c0.90
+a0.96</text>
+        </name>
+      </place>
+      <place id="5&#10;c0.35&#10;a1.00">
+        <name>
+          <text>5
+c0.35
+a1.00</text>
+        </name>
+      </place>
+      <place id="2&#10;c0.92&#10;a1.00">
+        <name>
+          <text>2
+c0.92
+a1.00</text>
+        </name>
+      </place>
+      <place id="3&#10;c0.27&#10;a1.00">
+        <name>
+          <text>3
+c0.27
+a1.00</text>
+        </name>
+      </place>
+      <place id="0&#10;c0.35&#10;a1.00">
+        <name>
+          <text>0
+c0.35
+a1.00</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="1&#10;c1.00&#10;a1.00">
+        <name>
+          <text>1
+c1.00
+a1.00</text>
+        </name>
+      </place>
+      <place id="4&#10;c0.36&#10;a1.00">
+        <name>
+          <text>4
+c0.36
+a1.00</text>
+        </name>
+      </place>
+      <transition id="O_Create Offer">
+        <name>
+          <text>O_Create Offer</text>
+        </name>
+      </transition>
+      <transition id="O_Accepted">
+        <name>
+          <text>O_Accepted</text>
+        </name>
+      </transition>
+      <transition id="O_Created">
+        <name>
+          <text>O_Created</text>
+        </name>
+      </transition>
+      <transition id="O_Returned">
+        <name>
+          <text>O_Returned</text>
+        </name>
+      </transition>
+      <transition id="O_Sent (mail and online)">
+        <name>
+          <text>O_Sent (mail and online)</text>
+        </name>
+      </transition>
+      <transition id="O_Refused">
+        <name>
+          <text>O_Refused</text>
+        </name>
+      </transition>
+      <transition id="O_Cancelled">
+        <name>
+          <text>O_Cancelled</text>
+        </name>
+      </transition>
+      <transition id="O_Sent (online only)">
+        <name>
+          <text>O_Sent (online only)</text>
+        </name>
+      </transition>
+      <transition id="st1">
+        <name>
+          <text>st1</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="730e1ecd-1891-48f8-a4e7-1cabae3a910f"/>
+      </transition>
+      <transition id="st2">
+        <name>
+          <text>st2</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="6255de83-331b-4123-95b6-572fa9711bb4"/>
+      </transition>
+      <transition id="&gt;">
+        <name>
+          <text>&gt;</text>
+        </name>
+      </transition>
+      <transition id="st0">
+        <name>
+          <text>st0</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="0a29d0cc-d6c6-4fbd-9f4c-0d317170721b"/>
+      </transition>
+      <transition id="|">
+        <name>
+          <text>|</text>
+        </name>
+      </transition>
+      <arc id="-9223363259749627774" source="st0" target="0&#10;c0.35&#10;a1.00"/>
+      <arc id="8777105147919" source="6&#10;c0.90&#10;a0.96" target="|"/>
+      <arc id="8777105148052" source="st2" target="5&#10;c0.35&#10;a1.00"/>
+      <arc id="-9223363259749627753" source="O_Sent (mail and online)" target="4&#10;c0.36&#10;a1.00"/>
+      <arc id="-9223363259749627879" source="&gt;" target="0&#10;c0.35&#10;a1.00"/>
+      <arc id="8777105148059" source="0&#10;c0.35&#10;a1.00" target="st2"/>
+      <arc id="-9223363259749627746" source="O_Create Offer" target="1&#10;c1.00&#10;a1.00"/>
+      <arc id="8777105148087" source="O_Returned" target="5&#10;c0.35&#10;a1.00"/>
+      <arc id="8777105148094" source="O_Cancelled" target="6&#10;c0.90&#10;a0.96"/>
+      <arc id="-9223363259749627711" source="2&#10;c0.92&#10;a1.00" target="O_Sent (online only)"/>
+      <arc id="-9223363259749627837" source="O_Refused" target="6&#10;c0.90&#10;a0.96"/>
+      <arc id="8777105148101" source="4&#10;c0.36&#10;a1.00" target="O_Accepted"/>
+      <arc id="8777105147975" source="2&#10;c0.92&#10;a1.00" target="st0"/>
+      <arc id="-9223363259749627830" source="5&#10;c0.35&#10;a1.00" target="O_Create Offer"/>
+      <arc id="8777105147982" source="O_Created" target="2&#10;c0.92&#10;a1.00"/>
+      <arc id="8777105147989" source="st1" target="0&#10;c0.35&#10;a1.00"/>
+      <arc id="-9223363259749627816" source="4&#10;c0.36&#10;a1.00" target="O_Cancelled"/>
+      <arc id="-9223363259749627809" source="4&#10;c0.36&#10;a1.00" target="st1"/>
+      <arc id="-9223363259749627676" source="1&#10;c1.00&#10;a1.00" target="O_Created"/>
+      <arc id="8777105148010" source="O_Accepted" target="6&#10;c0.90&#10;a0.96"/>
+      <arc id="-9223363259749627669" source="O_Sent (online only)" target="3&#10;c0.27&#10;a1.00"/>
+      <arc id="-9223363259749627788" source="0&#10;c0.35&#10;a1.00" target="O_Create Offer"/>
+      <arc id="8777105148024" source="3&#10;c0.27&#10;a1.00" target="O_Returned"/>
+      <arc id="-9223363259749627655" source="4&#10;c0.36&#10;a1.00" target="O_Refused"/>
+      <arc id="-9223363259749627781" source="O_Created" target="0&#10;c0.35&#10;a1.00"/>
+      <arc id="8777105148031" source="2&#10;c0.92&#10;a1.00" target="O_Sent (mail and online)"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="6&#10;c0.90&#10;a0.96">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>
