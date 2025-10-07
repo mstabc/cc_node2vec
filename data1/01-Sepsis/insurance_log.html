@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Insurance Token Replay + Event Log (Top 10 Fading)</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      background-color: #f4f4f4;
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 28px 0 0 0;
+      gap: 30px;
+    }
+    svg {
+      background-color: #232323;
+      border: 2px solid #555;
+      margin-bottom: 12px;
+    }
+    .event-log-table {
+      background: #fff;
+      border-radius: 9px;
+      box-shadow: 0 2px 12px #0001;
+      border-collapse: collapse;
+      margin-top: 4px;
+      width: 375px;
+      min-width: 310px;
+      font-size: 15px;
+      overflow: hidden;
+    }
+    .event-log-table thead th {
+      background: #4285f4;
+      color: #fff;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      padding: 8px 12px;
+    }
+    .event-log-table tbody tr {
+      transition: background 0.3s, filter 0.7s, opacity 0.7s;
+    }
+    .event-log-table tbody tr.latest {
+      background: #e3f0ff !important;
+      font-weight: bold;
+    }
+    .event-log-table tbody tr.faded-1 { opacity: 0.85; filter: blur(0.5px) grayscale(10%);}
+    .event-log-table tbody tr.faded-2 { opacity: 0.70; filter: blur(1px) grayscale(20%);}
+    .event-log-table tbody tr.faded-3 { opacity: 0.58; filter: blur(1.5px) grayscale(30%);}
+    .event-log-table tbody tr.faded-4 { opacity: 0.46; filter: blur(2px) grayscale(40%);}
+    .event-log-table tbody tr.faded-5 { opacity: 0.36; filter: blur(2.5px) grayscale(50%);}
+    .event-log-table tbody tr.faded-6 { opacity: 0.28; filter: blur(3px) grayscale(60%);}
+    .event-log-table tbody tr.faded-7 { opacity: 0.20; filter: blur(3.5px) grayscale(70%);}
+    .event-log-table tbody tr.faded-8 { opacity: 0.13; filter: blur(4px) grayscale(80%);}
+    .event-log-table tbody tr.faded-9 { opacity: 0.07; filter: blur(4.5px) grayscale(90%);}
+    .event-log-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e7e7e7;
+      background: #fff;
+    }
+    .event-log-table tr:last-child td {
+      border-bottom: none;
+    }
+    .station {
+      fill: #222;
+      stroke: white;
+      stroke-width: 3px;
+      rx: 11;
+      ry: 11;
+    }
+    .station-label {
+      fill: white;
+      font-size: 13px;
+      font-weight: bold;
+      text-anchor: middle;
+      pointer-events: none;
+    }
+    .station-icon {
+      font-size: 1.6em;
+      text-anchor: middle;
+      pointer-events: none;
+      dominant-baseline: middle;
+    }
+    .token {
+      stroke: white;
+      stroke-width: 1.3px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <svg width="560" height="340"></svg>
+  <div>
+    <table class="event-log-table">
+      <thead>
+        <tr>
+          <th>Case ID</th>
+          <th>Task Name</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody id="eventLogBody">
+        <!-- Event rows will go here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+const svg = d3.select("svg");
+
+const process = [
+  { id: "Start", label: "Start", icon: "🚦" },
+  { id: "Register", label: "Register Claim", icon: "📝" },
+  { id: "Verify", label: "Verify Doc", icon: "📄" },
+  { id: "Assess", label: "Assess", icon: "🔎" },
+  { id: "Reject", label: "Reject", icon: "❌" },
+  { id: "RequestInfo", label: "Req Info", icon: "📬" },
+  { id: "Reassess", label: "Reassess", icon: "🔄" },
+  { id: "Approve", label: "Approve", icon: "✅" },
+  { id: "Payout", label: "Payout", icon: "💸" },
+  { id: "End", label: "End", icon: "🏁" }
+];
+
+// Compact 2-row layout (smaller SVG)
+const layout = {
+  "Start":      {col:0, row:0},
+  "Register":   {col:1, row:0},
+  "Verify":     {col:2, row:0},
+  "Assess":     {col:3, row:0},
+  "Approve":    {col:4, row:0},
+  "Payout":     {col:5, row:0},
+  "End":        {col:6, row:0},
+  "Reject":     {col:3, row:1},
+  "RequestInfo":{col:4, row:1},
+  "Reassess":   {col:5, row:1}
+};
+const boxWidth = 65, boxHeight = 45, gapX = 10, gapY = 68;
+process.forEach(d => {
+  d.col = layout[d.id].col;
+  d.row = layout[d.id].row;
+  d.x = 14 + d.col * (boxWidth + gapX);
+  d.y = 30 + d.row * (boxHeight + gapY);
+});
+const stationMap = {};
+process.forEach(d => stationMap[d.id] = d);
+
+svg.selectAll(".station")
+  .data(process)
+  .enter()
+  .append("rect")
+  .attr("class", "station")
+  .attr("x", d => d.x)
+  .attr("y", d => d.y)
+  .attr("width", boxWidth)
+  .attr("height", boxHeight);
+
+svg.selectAll(".station-icon")
+  .data(process)
+  .enter()
+  .append("text")
+  .attr("class", "station-icon")
+  .attr("x", d => d.x + boxWidth / 2)
+  .attr("y", d => d.y + 19)
+  .text(d => d.icon);
+
+svg.selectAll(".station-label")
+  .data(process)
+  .enter()
+  .append("text")
+  .attr("class", "station-label")
+  .attr("x", d => d.x + boxWidth / 2)
+  .attr("y", d => d.y + boxHeight - 6)
+  .text(d => d.label);
+
+// Case definitions (traces)
+const traces = [
+  // Happy path
+  {trace: ["Start", "Register", "Verify", "Assess", "Approve", "Payout", "End"], caseId: "C001"},
+  // Reject after assess
+  {trace: ["Start", "Register", "Verify", "Assess", "Reject", "End"], caseId: "C002"},
+  // Request info, reassess, approve
+  {trace: ["Start", "Register", "Verify", "Assess", "RequestInfo", "Reassess", "Approve", "Payout", "End"], caseId: "C003"},
+  // Info, reassess, reject
+  {trace: ["Start", "Register", "Verify", "Assess", "RequestInfo", "Reassess", "Reject", "End"], caseId: "C004"}
+];
+
+const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+let eventLog = [];
+
+// Format timestamp to "HH:MM:SS"
+function timeStr(date) {
+  return date.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+}
+
+function updateEventLogTable() {
+  const tbody = document.getElementById("eventLogBody");
+  tbody.innerHTML = "";
+
+  // Only keep and show last 10 events
+  const visible = eventLog.slice(-10);
+  visible.forEach((e, idx) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `<td><b>${e.caseId}</b></td><td>${e.task}</td><td>${e.timestamp}</td>`;
+    if(idx === visible.length-1) {
+      row.classList.add("latest");
+    } else if(idx < visible.length-1) {
+      // Fade more the older the row is
+      const fadedClass = `faded-${visible.length-1-idx}`;
+      row.classList.add(fadedClass);
+    }
+    tbody.appendChild(row);
+  });
+}
+
+function addEventLogRow(caseId, task, timestamp) {
+  eventLog.push({caseId, task, timestamp});
+  updateEventLogTable();
+}
+
+function spawnToken(traceObj, tokenId) {
+  const {trace, caseId} = traceObj;
+  const token = svg.append("circle")
+    .attr("class", "token")
+    .attr("r", 8.5)
+    .attr("fill", colorScale(tokenId % 10))
+    .attr("cx", stationMap[trace[0]].x + boxWidth / 2)
+    .attr("cy", stationMap[trace[0]].y + boxHeight / 2);
+
+  // Log initial event
+  addEventLogRow(caseId, process.find(d=>d.id===trace[0]).label, timeStr(new Date()));
+
+  let i = 0;
+  function moveNext() {
+    i++;
+    if (i >= trace.length) {
+      token.transition().duration(550).style("opacity", 0).remove();
+      setTimeout(() => spawnToken(traceObj, tokenId + 4), 2500);
+      return;
+    }
+    const next = stationMap[trace[i]];
+    setTimeout(()=>{
+      // Log event on arrival
+      addEventLogRow(caseId, process.find(d=>d.id===trace[i]).label, timeStr(new Date()));
+    }, 550);
+    token.transition()
+      .duration(800)
+      .attr("cx", next.x + boxWidth / 2 + (Math.random() * 6 - 3))
+      .attr("cy", next.y + boxHeight / 2 + (Math.random() * 6 - 3))
+      .on("end", moveNext);
+  }
+  setTimeout(moveNext, 650 + Math.random() * 400);
+}
+
+traces.forEach((traceObj, i) => {
+  setTimeout(() => spawnToken(traceObj, i), i * 700);
+});
+</script>
+</body>
+</html>

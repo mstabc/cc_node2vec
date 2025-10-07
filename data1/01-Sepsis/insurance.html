@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Insurance Claim Token Replay</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      margin: 0;
+    }
+    svg {
+      display: block;
+      margin: auto;
+      background-color: #232323;
+      border: 2px solid #555;
+    }
+    .station {
+      fill: #222;
+      stroke: white;
+      stroke-width: 3px;
+      rx: 11;
+      ry: 11;
+    }
+    .station-label {
+      fill: white;
+      font-size: 13px;
+      font-weight: bold;
+      text-anchor: middle;
+      pointer-events: none;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .station-icon {
+      font-size: 1.7em;
+      text-anchor: middle;
+      pointer-events: none;
+      dominant-baseline: middle;
+    }
+    .token {
+      stroke: white;
+      stroke-width: 1.3px;
+    }
+  </style>
+</head>
+<body>
+<svg width="900" height="340"></svg>
+<script>
+const svg = d3.select("svg");
+
+const process = [
+  { id: "Start", label: "Start", icon: "🚦" },
+  { id: "Register", label: "Register Claim", icon: "📝" },
+  { id: "Verify", label: "Verify Doc", icon: "📄" },
+  { id: "Assess", label: "Assess", icon: "🔎" },
+  { id: "Reject", label: "Reject", icon: "❌" },
+  { id: "RequestInfo", label: "Req Info", icon: "📬" },
+  { id: "Reassess", label: "Reassess", icon: "🔄" },
+  { id: "Approve", label: "Approve", icon: "✅" },
+  { id: "Payout", label: "Payout", icon: "💸" },
+  { id: "End", label: "End", icon: "🏁" }
+];
+
+// Two compact rows, fits in frame
+const layout = {
+  "Start":      {col:0, row:0},
+  "Register":   {col:1, row:0},
+  "Verify":     {col:2, row:0},
+  "Assess":     {col:3, row:0},
+  "Approve":    {col:5, row:0},
+  "Payout":     {col:6, row:0},
+  "End":        {col:7, row:0},
+  "Reject":     {col:3, row:1},
+  "RequestInfo":{col:4, row:1},
+  "Reassess":   {col:5, row:1}
+};
+const boxWidth = 96, boxHeight = 54, gapX = 15, gapY = 70;
+process.forEach(d => {
+  d.col = layout[d.id].col;
+  d.row = layout[d.id].row;
+  d.x = 32 + d.col * (boxWidth + gapX);
+  d.y = 44 + d.row * (boxHeight + gapY);
+});
+const stationMap = {};
+process.forEach(d => stationMap[d.id] = d);
+
+svg.selectAll(".station")
+  .data(process)
+  .enter()
+  .append("rect")
+  .attr("class", "station")
+  .attr("x", d => d.x)
+  .attr("y", d => d.y)
+  .attr("width", boxWidth)
+  .attr("height", boxHeight);
+
+svg.selectAll(".station-icon")
+  .data(process)
+  .enter()
+  .append("text")
+  .attr("class", "station-icon")
+  .attr("x", d => d.x + boxWidth / 2)
+  .attr("y", d => d.y + 23)
+  .text(d => d.icon);
+
+svg.selectAll(".station-label")
+  .data(process)
+  .enter()
+  .append("text")
+  .attr("class", "station-label")
+  .attr("x", d => d.x + boxWidth / 2)
+  .attr("y", d => d.y + boxHeight - 8)
+  .text(d => d.label);
+
+// Define traces: Happy, Reject, Info loop, etc.
+const traces = [
+  // Happy path
+  ["Start", "Register", "Verify", "Assess", "Approve", "Payout", "End"],
+  // Reject after assess
+  ["Start", "Register", "Verify", "Assess", "Reject", "End"],
+  // Request info, reassess, approve
+  ["Start", "Register", "Verify", "Assess", "RequestInfo", "Reassess", "Approve", "Payout", "End"],
+  // Info, reassess, reject
+  ["Start", "Register", "Verify", "Assess", "RequestInfo", "Reassess", "Reject", "End"]
+];
+
+const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+function spawnToken(trace, tokenId) {
+  const token = svg.append("circle")
+    .attr("class", "token")
+    .attr("r", 10)
+    .attr("fill", colorScale(tokenId % 10))
+    .attr("cx", stationMap[trace[0]].x + boxWidth / 2)
+    .attr("cy", stationMap[trace[0]].y + boxHeight / 2);
+
+  let i = 0;
+  function moveNext() {
+    i++;
+    if (i >= trace.length) {
+      token.transition().duration(600).style("opacity", 0).remove();
+      setTimeout(() => spawnToken(trace, tokenId + 10), 2000);
+      return;
+    }
+    const next = stationMap[trace[i]];
+    token.transition()
+      .duration(1000)
+      .attr("cx", next.x + boxWidth / 2 + (Math.random() * 10 - 5))
+      .attr("cy", next.y + boxHeight / 2 + (Math.random() * 9 - 4.5))
+      .on("end", moveNext);
+  }
+  setTimeout(moveNext, 700 + Math.random() * 600);
+}
+
+traces.forEach((trace, i) => {
+  setTimeout(() => spawnToken(trace, i), i * 550);
+});
+</script>
+</body>
+</html>

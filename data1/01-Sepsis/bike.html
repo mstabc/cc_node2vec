@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bike Factory Simulation</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #1e1e1e;
+    }
+    svg {
+      display: block;
+      margin: auto;
+      background-color: #2c2c2c;
+      border: 2px solid #555;
+    }
+    .station {
+      fill: #333;
+      stroke: white;
+      stroke-width: 3px;
+      rx: 12;
+      ry: 12;
+    }
+    .label {
+      fill: white;
+      font-size: 14px;
+      font-weight: bold;
+      text-anchor: middle;
+    }
+    .icon {
+      font-size: 20px;
+      text-anchor: middle;
+      pointer-events: none;
+    }
+    .token {
+      stroke: white;
+      stroke-width: 1px;
+    }
+  </style>
+</head>
+<body>
+<svg width="1000" height="400"></svg>
+<script>
+const svg = d3.select("svg");
+const boxWidth = 140, boxHeight = 70, gapX = 160, gapY = 130;
+
+const stationDefs = [
+  { id: "Start", row: 0, col: 0, icon: "🏁" },
+  { id: "Attach Frame", row: 0, col: 1, icon: "🔩" },
+  { id: "Install Wheels", row: 0, col: 2, icon: "🚲" },
+  { id: "Mount Handlebars", row: 0, col: 3, icon: "🛠️" },
+  { id: "Quality Check", row: 1, col: 0, icon: "✅" },
+  { id: "Rework", row: 1, col: 1, icon: "♻️" },
+  { id: "Final Inspection", row: 1, col: 2, icon: "🔍" },
+  { id: "End", row: 1, col: 3, icon: "🏆" }
+];
+
+const flow = {
+  "Start": ["Attach Frame"],
+  "Attach Frame": ["Install Wheels"],
+  "Install Wheels": ["Mount Handlebars"],
+  "Mount Handlebars": ["Quality Check"],
+  "Quality Check": ["Final Inspection", "Rework"],
+  "Rework": ["Final Inspection"],
+  "Final Inspection": ["End"]
+};
+
+const getPos = (row, col) => ({
+  x: 60 + col * gapX,
+  y: 60 + row * gapY
+});
+
+const stationMap = {};
+stationDefs.forEach(station => {
+  const pos = getPos(station.row, station.col);
+  station.x = pos.x;
+  station.y = pos.y;
+  stationMap[station.id] = station;
+});
+
+// Draw stations
+svg.selectAll(".station")
+  .data(stationDefs)
+  .enter()
+  .append("rect")
+  .attr("class", "station")
+  .attr("x", d => d.x)
+  .attr("y", d => d.y)
+  .attr("width", boxWidth)
+  .attr("height", boxHeight)
+  .attr("rx", 12)
+  .attr("ry", 12);
+
+// Labels
+svg.selectAll(".label")
+  .data(stationDefs)
+  .enter()
+  .append("text")
+  .attr("class", "label")
+  .attr("x", d => d.x + boxWidth / 2)
+  .attr("y", d => d.y + boxHeight - 10)
+  .text(d => d.id);
+
+// Icons
+svg.selectAll(".icon")
+  .data(stationDefs)
+  .enter()
+  .append("text")
+  .attr("class", "icon")
+  .attr("x", d => d.x + boxWidth / 2)
+  .attr("y", d => d.y + 28)
+  .text(d => d.icon);
+
+// Token generator
+const tokenIdGen = () => Math.floor(Math.random() * 1e6);
+const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+function spawnToken() {
+  const id = tokenIdGen();
+  const color = colorScale(id);
+
+  const token = svg.append("circle")
+    .attr("class", "token")
+    .attr("id", `token-${id}`)
+    .attr("r", 8)
+    .attr("fill", color);
+
+  moveToken({ id, color, current: "Start", el: token });
+}
+
+// Movement logic
+function moveToken(token) {
+  const current = token.current;
+  const options = flow[current];
+  if (!options) {
+    // End: remove token and spawn a new one
+    token.el.transition().duration(500).style("opacity", 0).remove();
+    setTimeout(spawnToken, 1000 + Math.random() * 2000);
+    return;
+  }
+
+  const next = (current === "Quality Check")
+    ? (Math.random() < 0.7 ? "Final Inspection" : "Rework")
+    : options[Math.floor(Math.random() * options.length)];
+
+  const nextPos = stationMap[next];
+  token.el.transition()
+    .duration(1000)
+    .attr("cx", nextPos.x + boxWidth / 2 + (Math.random() * 20 - 10))
+    .attr("cy", nextPos.y + boxHeight / 2 + (Math.random() * 20 - 10))
+    .on("end", () => {
+      token.current = next;
+      if (next !== "End") {
+        setTimeout(() => moveToken(token), 800 + Math.random() * 1200);
+      } else {
+        moveToken(token); // handle End case
+      }
+    });
+}
+
+// Initialize with N tokens
+d3.range(6).forEach((_, i) => setTimeout(spawnToken, i * 700));
+</script>
+</body>
+</html>

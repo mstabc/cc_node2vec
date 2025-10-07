@@ -1,0 +1,82 @@
+{
+  "places": [
+    {
+      "id": "({'IV Antibiotics'}, {'Release B', 'Release A', 'ER Registration'})",
+      "label": "({'IV Antibiotics'}, {'Release B', 'Release A', 'ER Registration'})"
+    },
+    {
+      "id": "end",
+      "label": "end"
+    },
+    {
+      "id": "({'Release D', 'Release E', 'Release A', 'Release C'}, {'Return ER'})",
+      "label": "({'Release D', 'Release E', 'Release A', 'Release C'}, {'Return ER'})"
+    },
+    {
+      "id": "({'IV Liquid'}, {'Release B', 'Release A'})",
+      "label": "({'IV Liquid'}, {'Release B', 'Release A'})"
+    },
+    {
+      "id": "start",
+      "label": "start"
+    },
+    {
+      "id": "({'ER Sepsis Triage'}, {'IV Antibiotics'})",
+      "label": "({'ER Sepsis Triage'}, {'IV Antibiotics'})"
+    }
+  ],
+  "transitions": [
+    {"id": "Release E", "label": "Release E"},
+    {"id": "Release D", "label": "Release D"},
+    {"id": "Release C", "label": "Release C"},
+    {"id": "Release B", "label": "Release B"},
+    {"id": "ER Triage", "label": "ER Triage"},
+    {"id": "Admission IC", "label": "Admission IC"},
+    {"id": "LacticAcid", "label": "LacticAcid"},
+    {"id": "Admission NC", "label": "Admission NC"},
+    {"id": "IV Antibiotics", "label": "IV Antibiotics"},
+    {"id": "Release A", "label": "Release A"},
+    {"id": "Leucocytes", "label": "Leucocytes"},
+    {"id": "IV Liquid", "label": "IV Liquid"},
+    {"id": "ER Registration", "label": "ER Registration"},
+    {"id": "CRP", "label": "CRP"},
+    {"id": "Return ER", "label": "Return ER"},
+    {"id": "ER Sepsis Triage", "label": "ER Sepsis Triage"}
+  ],
+  "edges": [
+    {"source": "Release C", "target": "end"},
+    {"source": "LacticAcid", "target": "end"},
+    {"source": "IV Antibiotics", "target": "end"},
+    {"source": "IV Antibiotics", "target": "({'IV Antibiotics'}, {'Release B', 'Release A', 'ER Registration'})"},
+    {"source": "({'IV Antibiotics'}, {'Release B', 'Release A', 'ER Registration'})", "target": "Release B"},
+    {"source": "start", "target": "CRP"},
+    {"source": "({'ER Sepsis Triage'}, {'IV Antibiotics'})", "target": "IV Antibiotics"},
+    {"source": "({'IV Antibiotics'}, {'Release B', 'Release A', 'ER Registration'})", "target": "Release A"},
+    {"source": "start", "target": "IV Liquid"},
+    {"source": "IV Liquid", "target": "({'IV Liquid'}, {'Release B', 'Release A'})"},
+    {"source": "Release A", "target": "({'Release D', 'Release E', 'Release A', 'Release C'}, {'Return ER'})"},
+    {"source": "Return ER", "target": "end"},
+    {"source": "({'IV Antibiotics'}, {'Release B', 'Release A', 'ER Registration'})", "target": "ER Registration"},
+    {"source": "start", "target": "ER Registration"},
+    {"source": "Admission NC", "target": "end"},
+    {"source": "CRP", "target": "end"},
+    {"source": "({'Release D', 'Release E', 'Release A', 'Release C'}, {'Return ER'})", "target": "Return ER"},
+    {"source": "({'IV Liquid'}, {'Release B', 'Release A'})", "target": "Release B"},
+    {"source": "Release E", "target": "end"},
+    {"source": "IV Liquid", "target": "end"},
+    {"source": "Release C", "target": "({'Release D', 'Release E', 'Release A', 'Release C'}, {'Return ER'})"},
+    {"source": "({'IV Liquid'}, {'Release B', 'Release A'})", "target": "Release A"},
+    {"source": "Release A", "target": "end"},
+    {"source": "ER Triage", "target": "end"},
+    {"source": "start", "target": "ER Sepsis Triage"},
+    {"source": "start", "target": "ER Triage"},
+    {"source": "start", "target": "Leucocytes"},
+    {"source": "Leucocytes", "target": "end"},
+    {"source": "ER Sepsis Triage", "target": "end"},
+    {"source": "Release D", "target": "({'Release D', 'Release E', 'Release A', 'Release C'}, {'Return ER'})"},
+    {"source": "Release E", "target": "({'Release D', 'Release E', 'Release A', 'Release C'}, {'Return ER'})"},
+    {"source": "ER Sepsis Triage", "target": "({'ER Sepsis Triage'}, {'IV Antibiotics'})"},
+    {"source": "Release D", "target": "end"},
+    {"source": "Release B", "target": "end"}
+  ]
+}

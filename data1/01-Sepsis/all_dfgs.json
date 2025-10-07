@@ -1,0 +1,429 @@
+[
+  {
+    "name": "mined_graph",
+    "nodes": [
+      {
+        "id": "n16"
+      },
+      {
+        "id": "n11"
+      },
+      {
+        "id": "n3"
+      },
+      {
+        "id": "n1"
+      },
+      {
+        "id": "n6"
+      },
+      {
+        "id": "n18"
+      },
+      {
+        "id": "n7"
+      },
+      {
+        "id": "n8"
+      },
+      {
+        "id": "n10"
+      },
+      {
+        "id": "n14"
+      },
+      {
+        "id": "n5"
+      },
+      {
+        "id": "n9"
+      },
+      {
+        "id": "n13"
+      },
+      {
+        "id": "n17"
+      },
+      {
+        "id": "n4"
+      },
+      {
+        "id": "n2"
+      },
+      {
+        "id": "n12"
+      },
+      {
+        "id": "n15"
+      },
+      {
+        "id": "n19"
+      },
+      {
+        "id": "Leucocytes"
+      },
+      {
+        "id": "n38"
+      },
+      {
+        "id": "n40"
+      },
+      {
+        "id": "n45"
+      },
+      {
+        "id": "n50"
+      },
+      {
+        "id": "n52"
+      },
+      {
+        "id": "Release D"
+      },
+      {
+        "id": "Release C"
+      },
+      {
+        "id": "Admission NC"
+      },
+      {
+        "id": "IV Antibiotics"
+      },
+      {
+        "id": "Return ER"
+      },
+      {
+        "id": "n41"
+      },
+      {
+        "id": "n43"
+      },
+      {
+        "id": "n48"
+      },
+      {
+        "id": "ER Sepsis Triage"
+      },
+      {
+        "id": "n36"
+      },
+      {
+        "id": "Admission IC"
+      },
+      {
+        "id": "LacticAcid"
+      },
+      {
+        "id": "ER Triage"
+      },
+      {
+        "id": "n39"
+      },
+      {
+        "id": "n44"
+      },
+      {
+        "id": "n46"
+      },
+      {
+        "id": "n51"
+      },
+      {
+        "id": "Release B"
+      },
+      {
+        "id": "IV Liquid"
+      },
+      {
+        "id": "Release E"
+      },
+      {
+        "id": "Release A"
+      },
+      {
+        "id": "n37"
+      },
+      {
+        "id": "n42"
+      },
+      {
+        "id": "n47"
+      },
+      {
+        "id": "n49"
+      },
+      {
+        "id": "CRP"
+      },
+      {
+        "id": "ER Registration"
+      }
+    ],
+    "edges": [
+      {
+        "source": "n16",
+        "target": "IV Antibiotics"
+      },
+      {
+        "source": "n11",
+        "target": "CRP"
+      },
+      {
+        "source": "n3",
+        "target": "n45"
+      },
+      {
+        "source": "n3",
+        "target": "Return ER"
+      },
+      {
+        "source": "n1",
+        "target": "n52"
+      },
+      {
+        "source": "n1",
+        "target": "n51"
+      },
+      {
+        "source": "n6",
+        "target": "n36"
+      },
+      {
+        "source": "n6",
+        "target": "n49"
+      },
+      {
+        "source": "n6",
+        "target": "n47"
+      },
+      {
+        "source": "n18",
+        "target": "IV Liquid"
+      },
+      {
+        "source": "n7",
+        "target": "Admission IC"
+      },
+      {
+        "source": "n8",
+        "target": "n48"
+      },
+      {
+        "source": "n8",
+        "target": "n38"
+      },
+      {
+        "source": "n10",
+        "target": "n40"
+      },
+      {
+        "source": "n10",
+        "target": "n41"
+      },
+      {
+        "source": "n14",
+        "target": "n44"
+      },
+      {
+        "source": "n14",
+        "target": "n43"
+      },
+      {
+        "source": "n5",
+        "target": "Leucocytes"
+      },
+      {
+        "source": "n9",
+        "target": "Admission NC"
+      },
+      {
+        "source": "n13",
+        "target": "LacticAcid"
+      },
+      {
+        "source": "n17",
+        "target": "ER Sepsis Triage"
+      },
+      {
+        "source": "n2",
+        "target": "n37"
+      },
+      {
+        "source": "n2",
+        "target": "n39"
+      },
+      {
+        "source": "n12",
+        "target": "n46"
+      },
+      {
+        "source": "n12",
+        "target": "n50"
+      },
+      {
+        "source": "n12",
+        "target": "Release C"
+      },
+      {
+        "source": "n12",
+        "target": "Release E"
+      },
+      {
+        "source": "n12",
+        "target": "n42"
+      },
+      {
+        "source": "n12",
+        "target": "Release A"
+      },
+      {
+        "source": "n12",
+        "target": "Release B"
+      },
+      {
+        "source": "n12",
+        "target": "Release D"
+      },
+      {
+        "source": "n15",
+        "target": "ER Triage"
+      },
+      {
+        "source": "n19",
+        "target": "ER Registration"
+      },
+      {
+        "source": "Leucocytes",
+        "target": "n6"
+      },
+      {
+        "source": "n38",
+        "target": "n7"
+      },
+      {
+        "source": "n40",
+        "target": "n1"
+      },
+      {
+        "source": "n45",
+        "target": "n4"
+      },
+      {
+        "source": "n50",
+        "target": "n13"
+      },
+      {
+        "source": "n52",
+        "target": "n11"
+      },
+      {
+        "source": "Release D",
+        "target": "n4"
+      },
+      {
+        "source": "Release C",
+        "target": "n4"
+      },
+      {
+        "source": "Admission NC",
+        "target": "n10"
+      },
+      {
+        "source": "IV Antibiotics",
+        "target": "n2"
+      },
+      {
+        "source": "Return ER",
+        "target": "n4"
+      },
+      {
+        "source": "n41",
+        "target": "n9"
+      },
+      {
+        "source": "n43",
+        "target": "n1"
+      },
+      {
+        "source": "n48",
+        "target": "n13"
+      },
+      {
+        "source": "ER Sepsis Triage",
+        "target": "n18"
+      },
+      {
+        "source": "n36",
+        "target": "n5"
+      },
+      {
+        "source": "Admission IC",
+        "target": "n8"
+      },
+      {
+        "source": "LacticAcid",
+        "target": "n14"
+      },
+      {
+        "source": "ER Triage",
+        "target": "n17"
+      },
+      {
+        "source": "n39",
+        "target": "n9"
+      },
+      {
+        "source": "n44",
+        "target": "n13"
+      },
+      {
+        "source": "n46",
+        "target": "n5"
+      },
+      {
+        "source": "n51",
+        "target": "n5"
+      },
+      {
+        "source": "Release B",
+        "target": "n4"
+      },
+      {
+        "source": "IV Liquid",
+        "target": "n16"
+      },
+      {
+        "source": "Release E",
+        "target": "n4"
+      },
+      {
+        "source": "Release A",
+        "target": "n3"
+      },
+      {
+        "source": "n37",
+        "target": "n7"
+      },
+      {
+        "source": "n42",
+        "target": "n11"
+      },
+      {
+        "source": "n47",
+        "target": "n11"
+      },
+      {
+        "source": "n49",
+        "target": "n13"
+      },
+      {
+        "source": "CRP",
+        "target": "n12"
+      },
+      {
+        "source": "ER Registration",
+        "target": "n15"
+      }
+    ]
+  }
+]

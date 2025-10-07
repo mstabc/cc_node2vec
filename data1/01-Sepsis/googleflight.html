@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Flights Token Replay - Two Rows Emoji</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      margin: 0;
+    }
+    svg {
+      display: block;
+      margin: auto;
+      background-color: #2c2c2c;
+      border: 2px solid #555;
+    }
+    .station {
+      fill: #222;
+      stroke: white;
+      stroke-width: 4px;
+      rx: 13;
+      ry: 13;
+    }
+    .station-label {
+      fill: white;
+      font-size: 16px;
+      font-weight: bold;
+      text-anchor: middle;
+      pointer-events: none;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .station-icon {
+      font-size: 2em;
+      text-anchor: middle;
+      pointer-events: none;
+      dominant-baseline: middle;
+    }
+    .token {
+      stroke: white;
+      stroke-width: 1.5px;
+    }
+  </style>
+</head>
+<body>
+<svg width="1200" height="400"></svg>
+<script>
+  const svg = d3.select("svg");
+
+  // Steps with EMOJI icons
+  const process = [
+    { id: "Start",        label: "Start",        icon: "🚦" },
+    { id: "Open",         label: "Open Google Flights", icon: "🌐" },
+    { id: "Search",       label: "Search Flights",      icon: "🔍" },
+    { id: "Filters",      label: "Apply Filters",       icon: "🎚️" },
+    { id: "ViewDetails",  label: "View Details",        icon: "👁️" },
+    { id: "Select",       label: "Select Flight",       icon: "✈️" },
+    { id: "Redirect",     label: "Redirect to Airline", icon: "🔗" },
+    { id: "Confirm",      label: "Confirm Booking",     icon: "✅" },
+    { id: "End",          label: "End",                 icon: "🏁" }
+  ];
+
+  // Layout in 2 rows: first 5 steps top row, last 4 in bottom row
+  const cols = 5;
+  const boxWidth = 180, boxHeight = 80, gapX = 30, gapY = 40;
+  process.forEach((d, i) => {
+    d.row = i < cols ? 0 : 1;
+    d.col = d.row === 0 ? i : i - cols;
+    d.x = 60 + d.col * (boxWidth + gapX);
+    d.y = 60 + d.row * (boxHeight + gapY);
+  });
+  const stationMap = {};
+  process.forEach(d => stationMap[d.id] = d);
+
+  // Draw station rectangles
+  svg.selectAll(".station")
+    .data(process)
+    .enter()
+    .append("rect")
+    .attr("class", "station")
+    .attr("x", d => d.x)
+    .attr("y", d => d.y)
+    .attr("width", boxWidth)
+    .attr("height", boxHeight);
+
+  // Draw station EMOJI icons
+  svg.selectAll(".station-icon")
+    .data(process)
+    .enter()
+    .append("text")
+    .attr("class", "station-icon")
+    .attr("x", d => d.x + boxWidth / 2)
+    .attr("y", d => d.y + 36)
+    .text(d => d.icon);
+
+  // Draw station labels
+  svg.selectAll(".station-label")
+    .data(process)
+    .enter()
+    .append("text")
+    .attr("class", "station-label")
+    .attr("x", d => d.x + boxWidth / 2)
+    .attr("y", d => d.y + boxHeight - 14)
+    .text(d => d.label);
+
+  // Example traces
+  const traces = [
+    ["Start", "Open", "Search", "Filters", "ViewDetails", "Select", "Redirect", "Confirm", "End"],
+    ["Start", "Open", "Search", "ViewDetails", "Select", "Redirect", "Confirm", "End"],
+    ["Start", "Open", "Search", "Filters", "ViewDetails", "Select", "Redirect", "End"],
+    ["Start", "Open", "Search", "Select", "Redirect", "Confirm", "End"]
+  ];
+
+  const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+  function spawnToken(trace, tokenId) {
+    const token = svg.append("circle")
+      .attr("class", "token")
+      .attr("r", 14)
+      .attr("fill", colorScale(tokenId % 10))
+      .attr("cx", stationMap[trace[0]].x + boxWidth / 2)
+      .attr("cy", stationMap[trace[0]].y + boxHeight / 2);
+
+    let i = 0;
+    function moveNext() {
+      i++;
+      if (i >= trace.length) {
+        token.transition().duration(600).style("opacity", 0).remove();
+        setTimeout(() => spawnToken(trace, tokenId + 10), 2000);
+        return;
+      }
+      const next = stationMap[trace[i]];
+      token.transition()
+        .duration(1000)
+        .attr("cx", next.x + boxWidth / 2 + (Math.random() * 20 - 10))
+        .attr("cy", next.y + boxHeight / 2 + (Math.random() * 16 - 8))
+        .on("end", moveNext);
+    }
+    setTimeout(moveNext, 900 + Math.random() * 700);
+  }
+
+  // Spawn initial tokens for all traces
+  traces.forEach((trace, i) => {
+    setTimeout(() => spawnToken(trace, i), i * 600);
+  });
+</script>
+</body>
+</html>

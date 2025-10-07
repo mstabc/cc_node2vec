@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Petri Net Token Replay</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #1e1e1e;
+      color: white;
+    }
+
+    svg {
+      display: block;
+      margin: auto;
+      background-color: #1e1e1e;
+      border: 2px solid #555;
+    }
+
+    .place {
+      fill: #3498db;
+      stroke: #fff;
+      stroke-width: 1px;
+    }
+
+    .transition {
+      fill: #2ecc71;
+      stroke: #fff;
+      stroke-width: 1px;
+    }
+
+    .token {
+      fill: #f1c40f;
+    }
+
+    .edge {
+      stroke: #aaa;
+      stroke-width: 1.5px;
+      marker-end: url(#arrow);
+    }
+
+    .label {
+      fill: white;
+      font-size: 12px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<svg id="canvas" width="1800" height="1000"></svg>
+
+<script>
+const width = 1800;
+const height = 1000;
+
+const svg = d3.select("#canvas");
+const g = svg.append("g");
+
+svg.call(d3.zoom().on("zoom", (event) => g.attr("transform", event.transform)));
+
+// Arrow marker
+svg.append("defs").append("marker")
+  .attr("id", "arrow")
+  .attr("viewBox", "0 -5 10 10")
+  .attr("refX", 20)
+  .attr("refY", 0)
+  .attr("markerWidth", 6)
+  .attr("markerHeight", 6)
+  .attr("orient", "auto")
+  .append("path")
+  .attr("d", "M0,-5L10,0L0,5")
+  .attr("fill", "#aaa");
+
+Promise.all([
+  fetch('alpha.json').then(res => res.json()),
+  fetch('data.json').then(res => res.json())
+]).then(([graph, log]) => {
+  const nodes = graph.nodes;
+  const edges = graph.edges;
+
+  const nodeMap = new Map(nodes.map(n => [n.id, n]));
+  const links = edges.map(e => ({
+    source: nodeMap.get(e.source),
+    target: nodeMap.get(e.target)
+  }));
+
+  // Force layout
+  const simulation = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+    .force("charge", d3.forceManyBody().strength(-400))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .on("tick", ticked);
+
+  const link = g.selectAll(".edge")
+    .data(links)
+    .enter()
+    .append("line")
+    .attr("class", "edge");
+
+  const node = g.selectAll(".node")
+    .data(nodes)
+    .enter()
+    .append("g")
+    .attr("class", "node");
+
+  node.append(d => {
+    if (d.type === "place") {
+      return document.createElementNS(d3.namespaces.svg, "circle");
+    } else {
+      return document.createElementNS(d3.namespaces.svg, "rect");
+    }
+  })
+  .attr("class", d => d.type)
+  .attr("r", d => d.type === "place" ? 6 : null)
+  .attr("width", d => d.type === "transition" ? 20 : null)
+  .attr("height", d => d.type === "transition" ? 20 : null)
+  .attr("x", d => d.type === "transition" ? -10 : null)
+  .attr("y", d => d.type === "transition" ? -10 : null);
+
+  // Only label transitions
+  node.filter(d => d.type === "transition")
+    .append("text")
+    .attr("class", "label")
+    .attr("dy", -20)
+    .attr("text-anchor", "middle")
+    .text(d => d.label || d.id);
+
+  const tokenGroup = g.append("g").attr("class", "tokens");
+
+  function ticked() {
+    link
+      .attr("x1", d => d.source.x)
+      .attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x)
+      .attr("y2", d => d.target.y);
+
+    node.attr("transform", d => `translate(${d.x},${d.y})`);
+  }
+
+  // Token Replay Animation
+  let traceIndex = 0;
+  let stepIndex = 0;
+  const tokens = new Map();
+
+  function animateReplay() {
+    if (traceIndex >= log.length) {
+      traceIndex = 0;
+      stepIndex = 0;
+      tokens.clear();
+      tokenGroup.selectAll("*").remove();
+    }
+
+    const trace = log[traceIndex];
+    const activity = trace[stepIndex];
+
+    const transitionNode = nodes.find(n => n.label === activity);
+    if (transitionNode) {
+      fireTransition(transitionNode);
+    }
+
+    stepIndex++;
+    if (stepIndex >= trace.length) {
+      traceIndex++;
+      stepIndex = 0;
+    }
+
+    setTimeout(animateReplay, 1000);
+  }
+
+  function fireTransition(tNode) {
+    // Find incoming and outgoing places
+    const incoming = links.filter(l => l.target.id === tNode.id && l.source.type === 'place');
+    const outgoing = links.filter(l => l.source.id === tNode.id && l.target.type === 'place');
+
+    incoming.forEach(link => {
+      const tokenId = `${link.source.id}`;
+      const token = tokens.get(tokenId);
+      if (token) {
+        token.transition()
+          .duration(400)
+          .attr("cx", link.target.x)
+          .attr("cy", link.target.y);
+        tokens.delete(tokenId);
+      }
+    });
+
+    outgoing.forEach(link => {
+      const token = tokenGroup.append("circle")
+        .attr("class", "token")
+        .attr("r", 6)
+        .attr("cx", tNode.x)
+        .attr("cy", tNode.y);
+      token.transition()
+        .duration(400)
+        .attr("cx", link.target.x)
+        .attr("cy", link.target.y);
+      tokens.set(link.target.id, token);
+    });
+  }
+
+  animateReplay();
+});
+</script>
+</body>
+</html>

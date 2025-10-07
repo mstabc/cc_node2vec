@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Petri Net – Animated, Pruned, Dynamic Layout from CSV</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { background: #f8fbff; font-family: 'Segoe UI', Arial, sans-serif; }
+    h2 { margin-top: 30px; text-align: center; font-size: 2em; color: #2567a2; }
+    .upload-row { display: flex; justify-content: center; align-items: center; margin-bottom: 18px; gap: 22px; }
+    label { font-size: 1.1em; font-weight: 600; color: #2167a2; }
+    input[type="file"] { font-size: 1.08em; border-radius: 8px; background: #e4efff; padding: 4px 12px; color: #244466; }
+    .prune-row {display: flex; align-items: center; justify-content: center; gap:10px;}
+    .prune-label {font-size: 1.08em; color:#1657a2;}
+    svg { background: #f6faff; border-radius: 14px; box-shadow: 0 8px 38px #bddcff44; border: 1.5px solid #cae3fa; }
+    .petri-activity { fill: url(#actGradient); stroke: #206fa6; stroke-width: 2.2px; rx: 10; ry: 10; }
+    .petri-label { font-family: 'Segoe UI Semibold', Arial, sans-serif; font-size: 17px; fill: #174361; text-anchor: middle; font-weight: 600; dominant-baseline: middle; pointer-events:none;}
+    .petri-place { fill: #fff; stroke: #88aacc; stroke-width: 2.2px; }
+    .petri-edge { stroke: #88b4f7; stroke-width: 2.1px; marker-end: url(#arrow); opacity: 0.93; }
+    .petri-edge.freq { stroke: #2b82c6; stroke-width: 3.3px; opacity: 1; }
+    #status { font-weight: bold; font-size: 1.1em; color: #b31d25; }
+  </style>
+</head>
+<body>
+  <h2>Petri Net – Animated Pruned Layout (≥N Cases) from Event Log CSV</h2>
+  <div class="upload-row">
+    <label for="csvInput">Upload CSV Event Log:</label>
+    <input type="file" id="csvInput" accept=".csv" />
+    <span id="status"></span>
+  </div>
+  <div class="prune-row" style="margin-bottom:12px;">
+    <span class="prune-label">Min cases for edge:</span>
+    <input id="pruneCount" type="number" value="100" min="1" max="1000" style="width:60px;font-size:1.1em;" />
+    <span style="color:#678;">(Increase to hide rare edges, decrease for more detail)</span>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;">
+    <svg id="pn" width="1480" height="400"></svg>
+    <div style="font-size: 15px;color: #6987a7; margin:10px 0 0 6px;text-align:center;">
+      <b>Animated, readable layout. Only frequent transitions shown.<br>Edit threshold above. Rectangles = activities. Circles = places.</b>
+    </div>
+  </div>
+  <script>
+    const svg = d3.select("#pn");
+    let traces = [];
+
+    function parseCSV(csvText) {
+      const lines = csvText.trim().split(/\r?\n/).filter(line=>line.trim());
+      const delim = [',','\t',';'].reduce((best, cur) => {
+        const cnt = lines[0].split(cur).length;
+        return cnt > best[1] ? [cur, cnt] : best;
+      }, ['', 0])[0];
+      const [header, ...rows] = lines;
+      const cols = header.split(delim).map(s=>s.trim().replace(/^"|"$/g,""));
+      const actIdx = cols.findIndex(h => h.toLowerCase().includes('concept') && h !== 'case:concept:name');
+      const caseIdx = cols.findIndex(h => h.toLowerCase().includes('case'));
+      if (caseIdx === -1 || actIdx === -1) throw new Error("CSV must have columns 'case:concept:name' and 'concept:name'");
+      return rows.map(line => {
+        let parts = line.split(delim).map(s=>s.trim().replace(/^"|"$/g,""));
+        return {case: parts[caseIdx], activity: parts[actIdx]};
+      }).filter(row => row.case && row.activity);
+    }
+
+    function buildPrunedPetriNet(traces, minCount=100) {
+      let allActs = [];
+      traces.forEach(trace => trace.forEach(a=>{
+        if(!allActs.includes(a)) allActs.push(a);
+      }));
+      let activities = allActs.map((a,i)=>({
+        id: "A"+i,
+        label: a,
+        type: "activity",
+        x: 70 + i*130,
+        y: 120
+      }));
+      let transCounts = {};
+      traces.forEach(trace => {
+        let caseSeen = {};
+        for(let i=0;i<trace.length-1;++i){
+          let a1 = allActs.indexOf(trace[i]);
+          let a2 = allActs.indexOf(trace[i+1]);
+          if(a1===-1||a2===-1)continue;
+          let key = a1+"|"+a2;
+          if(!caseSeen[key]) {
+            transCounts[key] = (transCounts[key]||0)+1;
+            caseSeen[key]=1;
+          }
+        }
+      });
+      let places = [], edges = [], placeMap = {};
+      Object.entries(transCounts).forEach(([key, count])=>{
+        if(count>=minCount) {
+          let [a1,a2]=key.split('|').map(Number);
+          let px = (activities[a1].x+activities[a2].x)/2;
+          let pid = "P"+key;
+          places.push({id:pid,type:"place",x:px,y:245, a1, a2});
+          edges.push({from:activities[a1].id,to:pid,count});
+          edges.push({from:pid,to:activities[a2].id,count});
+        }
+      });
+      // Sort activities and places by x for animation order
+      activities.sort((a, b) => a.x - b.x);
+      places.sort((a, b) => a.x - b.x);
+      return {activities, places, edges};
+    }
+
+    // Animation
+    async function animatePetriNet(model, minCount) {
+      svg.selectAll("*").remove();
+      // Gradient and arrow
+      const defs = svg.append("defs");
+      const grad = defs.append("linearGradient").attr("id", "actGradient").attr("x1", "0%").attr("y1", "0%").attr("x2", "100%").attr("y2", "0%");
+      grad.append("stop").attr("offset", "0%").attr("stop-color", "#7bd2f7");
+      grad.append("stop").attr("offset", "100%").attr("stop-color", "#4fb8e7");
+      defs.append("marker")
+        .attr("id", "arrow")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 22)
+        .attr("refY", 0)
+        .attr("markerWidth", 7)
+        .attr("markerHeight", 7)
+        .attr("orient", "auto")
+        .append("path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", "#88b4f7");
+      // Animate activities
+      for (let i = 0; i < model.activities.length; ++i) {
+        let act = model.activities[i];
+        svg.append("rect")
+          .attr("class", "petri-activity")
+          .attr("x", act.x-65)
+          .attr("y", act.y-24)
+          .attr("width", 130)
+          .attr("height", 48)
+          .attr("rx", 14).attr("ry", 14)
+          .attr("opacity", 0)
+          .transition().duration(320).attr("opacity", 1);
+        svg.append("text")
+          .attr("class", "petri-label")
+          .attr("x", act.x)
+          .attr("y", act.y+4)
+          .attr("opacity", 0)
+          .text(act.label)
+          .transition().duration(320).attr("opacity", 1);
+        await new Promise(res=>setTimeout(res, 90));
+      }
+      // Animate places
+      for (let i = 0; i < model.places.length; ++i) {
+        let p = model.places[i];
+        svg.append("circle")
+          .attr("class", "petri-place")
+          .attr("cx", p.x)
+          .attr("cy", p.y)
+          .attr("r", 16)
+          .attr("opacity", 0)
+          .transition().duration(280).attr("opacity", 1);
+        await new Promise(res=>setTimeout(res, 50));
+      }
+      // Animate edges (two per transition)
+      for (let i = 0; i < model.edges.length; ++i) {
+        let d = model.edges[i];
+        let from = model.activities.find(n=>n.id===d.from) || model.places.find(n=>n.id===d.from);
+        let to   = model.activities.find(n=>n.id===d.to)   || model.places.find(n=>n.id===d.to);
+        if(!from||!to) continue;
+        svg.append("path")
+          .attr("class", "petri-edge"+(d.count>=minCount+5?" freq":""))
+          .attr("d", ()=>{
+            if(from.type==="activity"&&to.type==="place")
+              return `M${from.x+60},${from.y+24} Q${(from.x+to.x)/2},${from.y+62} ${to.x},${to.y-18}`;
+            if(from.type==="place"&&to.type==="activity")
+              return `M${from.x},${from.y+18} Q${(from.x+to.x)/2},${to.y-62} ${to.x-60},${to.y-24}`;
+            return `M${from.x},${from.y} L${to.x},${to.y}`;
+          })
+          .attr("stroke-dasharray", "1,220")
+          .attr("stroke-dashoffset", 220)
+          .transition().duration(440)
+          .attr("stroke-dashoffset", 0);
+        await new Promise(res=>setTimeout(res, 45));
+      }
+    }
+
+    function updateGraph() {
+      if(!traces.length) return;
+      const mc = Math.max(1,parseInt(document.getElementById("pruneCount").value));
+      const model = buildPrunedPetriNet(traces, mc);
+      animatePetriNet(model, mc);
+    }
+
+    document.getElementById("pruneCount").addEventListener("input", updateGraph);
+
+    document.getElementById("csvInput").addEventListener("change", function(evt) {
+      const file = evt.target.files[0];
+      if (!file) return;
+      document.getElementById('status').textContent = "Loading...";
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const logArr = parseCSV(e.target.result);
+          // Group by trace/case
+          const traceObj = {};
+          logArr.forEach(ev => {
+            if (!traceObj[ev.case]) traceObj[ev.case] = [];
+            traceObj[ev.case].push(ev.activity);
+          });
+          traces = Object.entries(traceObj).map(([caseId, events]) => events).filter(ev => ev.length > 1);
+          document.getElementById('status').textContent = "";
+          if(traces.length === 0) {
+            document.getElementById('status').textContent = "No valid traces (must have at least two activities per case).";
+            return;
+          }
+          updateGraph();
+        } catch(err) {
+          document.getElementById('status').textContent = "Failed: " + err.message;
+        }
+      };
+      reader.readAsText(file);
+    });
+  </script>
+</body>
+</html>

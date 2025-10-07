@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DFG Animation — End Clean-up Untangling</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { background: #e7ebf7; color: #223; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+    .container { display: flex; flex-direction: row; gap: 36px; margin: 24px 0 0 0; align-items: flex-start; justify-content: center; }
+    .event-log-table { background: #f8fbff; border-radius: 13px; box-shadow: 0 2px 12px #abc3e899; font-size: 15px; min-width: 340px; width: 400px; border-collapse: collapse; color: #304050; margin-top: 10px; }
+    .event-log-table th { background: linear-gradient(90deg, #6cb8fa 0%, #96d7b9 100%); color: #175273; font-weight: bold; padding: 11px 14px; border-radius: 13px 13px 0 0; letter-spacing: 0.4px; font-size: 1em; border-bottom: 2.5px solid #d3e8ff; }
+    .event-log-table td { padding: 7px 13px; border-bottom: 1px solid #e2eaf7; background: #fcfeff; font-size: 1em; transition: background 0.25s; }
+    .event-log-table tr.latest { background: #5fa8ef !important; color: #fff; font-weight: 700; box-shadow: 0 2px 8px #2e9dc633; }
+    .event-log-table tr.faded1 { color: #7daae6; opacity: 0.8; font-weight: 600;}
+    .event-log-table tr.faded2 { color: #a3c2e2; opacity: 0.63;}
+    .event-log-table tr.faded3 { color: #bbcee6; opacity: 0.44; filter: blur(0.4px);}
+    .event-log-table tr.faded4 { color: #d7e3f2; opacity: 0.26; filter: blur(1.3px);}
+    .dfg-legend { font-size: 15px; color: #6987a7; margin: 9px 0 0 7px; font-weight: 400; text-shadow: 0 2px 10px #8dbfff09; letter-spacing: 0.01em; }
+    svg { background: #f6faff; border-radius: 20px; box-shadow: 0 8px 38px #bddcff77; margin-bottom: 6px; display: block; margin-top: 8px; }
+    .dfg-edge { transition: stroke-width 0.33s, stroke 0.3s; }
+    .dfg-node { cursor: pointer; }
+    .dfg-nodelabel { font-family: 'Segoe UI Semibold', 'Segoe UI', Arial, sans-serif; font-size: 17px; font-weight: 600; letter-spacing: 0.01em; fill: #244460; pointer-events: none; text-shadow: 0 2px 12px #fff8; }
+  </style>
+</head>
+<body>
+  <h2 style="padding:25px 35px 2px 35px;margin:0;font-weight:700;letter-spacing:0.06em;color:#2a466c;">
+    Animated DFG — Clean Untangled Final Graph
+  </h2>
+  <div class="container">
+    <div>
+      <table class="event-log-table">
+        <thead>
+          <tr><th>Case ID</th><th>Activity</th></tr>
+        </thead>
+        <tbody id="eventLogBody"></tbody>
+      </table>
+    </div>
+    <div>
+      <svg id="dfg" width="1600" height="900"></svg>
+      <div class="dfg-legend">
+        <b>Large frame, left-to-right bias during animation.<br>
+        After animation, force simulation "untangles" the final graph for best readability.</b>
+      </div>
+    </div>
+  </div>
+  <script>
+    // CONFIG
+    const frameWidth = 1600, frameHeight = 900, nodeRadius = 36, margin = 60;
+    const fadeCount = 4; // fading styles for event log
+
+    const minedDFG = {
+      "name": "mined_graph",
+    "nodes": [
+      {
+        "id": "n16"
+      },
+      {
+        "id": "n11"
+      },
+      {
+        "id": "n3"
+      },
+      {
+        "id": "n1"
+      },
+      {
+        "id": "n6"
+      },
+      {
+        "id": "n18"
+      },
+      {
+        "id": "n7"
+      },
+      {
+        "id": "n8"
+      },
+      {
+        "id": "n10"
+      },
+      {
+        "id": "n14"
+      },
+      {
+        "id": "n5"
+      },
+      {
+        "id": "n9"
+      },
+      {
+        "id": "n13"
+      },
+      {
+        "id": "n17"
+      },
+      {
+        "id": "n4"
+      },
+      {
+        "id": "n2"
+      },
+      {
+        "id": "n12"
+      },
+      {
+        "id": "n15"
+      },
+      {
+        "id": "n19"
+      },
+      {
+        "id": "Leucocytes"
+      },
+      {
+        "id": "n38"
+      },
+      {
+        "id": "n40"
+      },
+      {
+        "id": "n45"
+      },
+      {
+        "id": "n50"
+      },
+      {
+        "id": "n52"
+      },
+      {
+        "id": "Release D"
+      },
+      {
+        "id": "Release C"
+      },
+      {
+        "id": "Admission NC"
+      },
+      {
+        "id": "IV Antibiotics"
+      },
+      {
+        "id": "Return ER"
+      },
+      {
+        "id": "n41"
+      },
+      {
+        "id": "n43"
+      },
+      {
+        "id": "n48"
+      },
+      {
+        "id": "ER Sepsis Triage"
+      },
+      {
+        "id": "n36"
+      },
+      {
+        "id": "Admission IC"
+      },
+      {
+        "id": "LacticAcid"
+      },
+      {
+        "id": "ER Triage"
+      },
+      {
+        "id": "n39"
+      },
+      {
+        "id": "n44"
+      },
+      {
+        "id": "n46"
+      },
+      {
+        "id": "n51"
+      },
+      {
+        "id": "Release B"
+      },
+      {
+        "id": "IV Liquid"
+      },
+      {
+        "id": "Release E"
+      },
+      {
+        "id": "Release A"
+      },
+      {
+        "id": "n37"
+      },
+      {
+        "id": "n42"
+      },
+      {
+        "id": "n47"
+      },
+      {
+        "id": "n49"
+      },
+      {
+        "id": "CRP"
+      },
+      {
+        "id": "ER Registration"
+      }
+    ],
+    "edges": [
+      {
+        "source": "n16",
+        "target": "IV Antibiotics"
+      },
+      {
+        "source": "n11",
+        "target": "CRP"
+      },
+      {
+        "source": "n3",
+        "target": "n45"
+      },
+      {
+        "source": "n3",
+        "target": "Return ER"
+      },
+      {
+        "source": "n1",
+        "target": "n52"
+      },
+      {
+        "source": "n1",
+        "target": "n51"
+      },
+      {
+        "source": "n6",
+        "target": "n36"
+      },
+      {
+        "source": "n6",
+        "target": "n49"
+      },
+      {
+        "source": "n6",
+        "target": "n47"
+      },
+      {
+        "source": "n18",
+        "target": "IV Liquid"
+      },
+      {
+        "source": "n7",
+        "target": "Admission IC"
+      },
+      {
+        "source": "n8",
+        "target": "n48"
+      },
+      {
+        "source": "n8",
+        "target": "n38"
+      },
+      {
+        "source": "n10",
+        "target": "n40"
+      },
+      {
+        "source": "n10",
+        "target": "n41"
+      },
+      {
+        "source": "n14",
+        "target": "n44"
+      },
+      {
+        "source": "n14",
+        "target": "n43"
+      },
+      {
+        "source": "n5",
+        "target": "Leucocytes"
+      },
+      {
+        "source": "n9",
+        "target": "Admission NC"
+      },
+      {
+        "source": "n13",
+        "target": "LacticAcid"
+      },
+      {
+        "source": "n17",
+        "target": "ER Sepsis Triage"
+      },
+      {
+        "source": "n2",
+        "target": "n37"
+      },
+      {
+        "source": "n2",
+        "target": "n39"
+      },
+      {
+        "source": "n12",
+        "target": "n46"
+      },
+      {
+        "source": "n12",
+        "target": "n50"
+      },
+      {
+        "source": "n12",
+        "target": "Release C"
+      },
+      {
+        "source": "n12",
+        "target": "Release E"
+      },
+      {
+        "source": "n12",
+        "target": "n42"
+      },
+      {
+        "source": "n12",
+        "target": "Release A"
+      },
+      {
+        "source": "n12",
+        "target": "Release B"
+      },
+      {
+        "source": "n12",
+        "target": "Release D"
+      },
+      {
+        "source": "n15",
+        "target": "ER Triage"
+      },
+      {
+        "source": "n19",
+        "target": "ER Registration"
+      },
+      {
+        "source": "Leucocytes",
+        "target": "n6"
+      },
+      {
+        "source": "n38",
+        "target": "n7"
+      },
+      {
+        "source": "n40",
+        "target": "n1"
+      },
+      {
+        "source": "n45",
+        "target": "n4"
+      },
+      {
+        "source": "n50",
+        "target": "n13"
+      },
+      {
+        "source": "n52",
+        "target": "n11"
+      },
+      {
+        "source": "Release D",
+        "target": "n4"
+      },
+      {
+        "source": "Release C",
+        "target": "n4"
+      },
+      {
+        "source": "Admission NC",
+        "target": "n10"
+      },
+      {
+        "source": "IV Antibiotics",
+        "target": "n2"
+      },
+      {
+        "source": "Return ER",
+        "target": "n4"
+      },
+      {
+        "source": "n41",
+        "target": "n9"
+      },
+      {
+        "source": "n43",
+        "target": "n1"
+      },
+      {
+        "source": "n48",
+        "target": "n13"
+      },
+      {
+        "source": "ER Sepsis Triage",
+        "target": "n18"
+      },
+      {
+        "source": "n36",
+        "target": "n5"
+      },
+      {
+        "source": "Admission IC",
+        "target": "n8"
+      },
+      {
+        "source": "LacticAcid",
+        "target": "n14"
+      },
+      {
+        "source": "ER Triage",
+        "target": "n17"
+      },
+      {
+        "source": "n39",
+        "target": "n9"
+      },
+      {
+        "source": "n44",
+        "target": "n13"
+      },
+      {
+        "source": "n46",
+        "target": "n5"
+      },
+      {
+        "source": "n51",
+        "target": "n5"
+      },
+      {
+        "source": "Release B",
+        "target": "n4"
+      },
+      {
+        "source": "IV Liquid",
+        "target": "n16"
+      },
+      {
+        "source": "Release E",
+        "target": "n4"
+      },
+      {
+        "source": "Release A",
+        "target": "n3"
+      },
+      {
+        "source": "n37",
+        "target": "n7"
+      },
+      {
+        "source": "n42",
+        "target": "n11"
+      },
+      {
+        "source": "n47",
+        "target": "n11"
+      },
+      {
+        "source": "n49",
+        "target": "n13"
+      },
+      {
+        "source": "CRP",
+        "target": "n12"
+      },
+      {
+        "source": "ER Registration",
+        "target": "n15"
+      }
+    ]
+    };
+
+    // --- Your event log ---
+    const rawLog = [
+  {case: "A", activity: "ER Registration"},
+  {case: "A", activity: "Leucocytes"},
+  {case: "A", activity: "CRP"},
+  {case: "A", activity: "LacticAcid"},
+  {case: "A", activity: "ER Triage"},
+  {case: "A", activity: "ER Sepsis Triage"},
+  {case: "A", activity: "IV Liquid"},
+  {case: "A", activity: "IV Antibiotics"},
+  {case: "A", activity: "Admission NC"},
+  {case: "A", activity: "CRP"},
+  {case: "A", activity: "Leucocytes"},
+  {case: "A", activity: "Leucocytes"},
+  {case: "A", activity: "CRP"},
+  {case: "AAA", activity: "ER Registration"},
+  {case: "AAA", activity: "ER Triage"},
+  {case: "AAA", activity: "ER Sepsis Triage"},
+  {case: "AAA", activity: "IV Liquid"},
+  {case: "AAA", activity: "Leucocytes"},
+  {case: "AAA", activity: "CRP"},
+  {case: "AAA", activity: "LacticAcid"},
+  {case: "AAA", activity: "IV Antibiotics"},
+  {case: "AAA", activity: "Admission NC"},
+  {case: "AAA", activity: "Release A"},
+  {case: "AAA", activity: "Return ER"},
+  {case: "ABA", activity: "ER Registration"},
+  {case: "ABA", activity: "ER Triage"},
+  {case: "ABA", activity: "ER Sepsis Triage"},
+  {case: "ABA", activity: "IV Liquid"},
+  {case: "ABA", activity: "LacticAcid"},
+  {case: "ABA", activity: "Leucocytes"},
+  {case: "ABA", activity: "CRP"},
+  {case: "ABA", activity: "IV Antibiotics"},
+  {case: "ABA", activity: "Admission NC"},
+  {case: "ABA", activity: "Leucocytes"},
+  {case: "ABA", activity: "CRP"},
+  {case: "ABA", activity: "Leucocytes"},
+  {case: "ABA", activity: "Leucocytes"}
+];
+
+    // --- Group by trace and flatten to linear steps ---
+    const traces = {}, linearLog = [];
+    rawLog.forEach((ev,i) => {
+      if (!traces[ev.case]) traces[ev.case] = [];
+      traces[ev.case].push(ev.activity);
+      linearLog.push({case: ev.case, activity: ev.activity, globalIdx: i});
+    });
+    const traceList = Object.entries(traces).map(([caseId, events]) => ({ caseId, events }));
+
+    // --- DFG state for animation ---
+    let DFG = { nodes: new Set(), edges: new Map() };
+
+    // --- D3 Setup ---
+    const svg = d3.select("#dfg").attr("width", frameWidth).attr("height", frameHeight);
+    let colorScale = d3.scaleOrdinal(d3.schemeSet2.concat(d3.schemeSet3));
+    let nodesArr = [], linksArr = [];
+    let simulation;
+
+    // Left-to-right initial positions for nodes (spread by appearance order)
+    let appearanceOrder = {};
+    minedDFG.nodes.forEach((d, i) => { appearanceOrder[d.id] = i; });
+
+    function runSimulation(finalLayout=false) {
+      // Use more repulsion and no forceX for final untangling
+      simulation = d3.forceSimulation(nodesArr)
+        .force("link", d3.forceLink(linksArr).id(d=>d.id).distance(finalLayout ? 330 : 180).strength(finalLayout ? 0.19 : 0.14))
+        .force("charge", d3.forceManyBody().strength(finalLayout ? -1900 : -700))
+        .force("center", d3.forceCenter(frameWidth/2, frameHeight/2))
+        .force("collision", d3.forceCollide().radius(nodeRadius+16))
+        .alpha(1)
+        .alphaDecay(finalLayout ? 0.001 : 0.09)
+        .on("tick", ticked);
+
+      // During animation: left-to-right bias; after: not
+      if (!finalLayout) {
+        simulation.force("x", d3.forceX().x(d => margin + (frameWidth-2*margin) * (appearanceOrder[d.id] || 0) / (minedDFG.nodes.length-1)).strength(0.18));
+      } else {
+        simulation.force("x", null);
+      }
+    }
+
+    function ticked() {
+      nodesArr.forEach(d => {
+        d.x = Math.max(nodeRadius+margin, Math.min(frameWidth-nodeRadius-margin, d.x));
+        d.y = Math.max(nodeRadius+margin, Math.min(frameHeight-nodeRadius-margin, d.y));
+      });
+      svg.selectAll(".dfg-edge")
+        .attr("x1", d=>d.source.x)
+        .attr("y1", d=>d.source.y)
+        .attr("x2", d=>d.target.x)
+        .attr("y2", d=>d.target.y);
+      svg.selectAll(".dfg-node")
+        .attr("transform", d => `translate(${d.x},${d.y})`);
+    }
+
+    function drawDFG(newEdge = null, newNodeList = []) {
+      nodesArr = Array.from(DFG.nodes).map(id => ({id}));
+      linksArr = Array.from(DFG.edges.entries()).map(([k, v])=>{
+        const [from, to] = k.split('→');
+        return {source: from, target: to, count: v};
+      });
+
+      // Data-join edges
+      let edgeSel = svg.selectAll(".dfg-edge").data(linksArr, d=>d.source+"-"+d.target);
+      edgeSel.enter()
+        .append("line")
+        .attr("class", "dfg-edge")
+        .attr("stroke", "#62a4ff")
+        .attr("stroke-width", d=> 1.3 + Math.sqrt(d.count)*1.45)
+        .attr("opacity", 0.45)
+        .attr("marker-end", "url(#arrow)")
+        .attr("filter", d=> (newEdge && d.source===newEdge[0] && d.target===newEdge[1]) ? "url(#edgeGlow)" : null)
+        .transition().duration(370)
+        .attr("stroke-width", d=> 2.5 + Math.sqrt(d.count)*1.85)
+        .attr("stroke", d=> (newEdge && d.source===newEdge[0] && d.target===newEdge[1]) ? "#1dd1a1" : "#90c5ff");
+      edgeSel.transition().duration(290)
+        .attr("stroke-width", d=> 2.5 + Math.sqrt(d.count)*1.85)
+        .attr("stroke", d=> (newEdge && d.source===newEdge[0] && d.target===newEdge[1]) ? "#1dd1a1" : "#90c5ff")
+        .attr("filter", d=> (newEdge && d.source===newEdge[0] && d.target===newEdge[1]) ? "url(#edgeGlow)" : null);
+      edgeSel.exit().remove();
+
+      // Data-join nodes
+      let nodeSel = svg.selectAll(".dfg-node").data(nodesArr, d=>d.id);
+      let nodeEnter = nodeSel.enter()
+        .append("g")
+        .attr("class", "dfg-node")
+        .attr("transform", d=>`translate(${frameWidth/2},${frameHeight/2})`)
+        .style("opacity", 0);
+
+      nodeEnter.append("circle")
+        .attr("r", 0)
+        .attr("fill", d=>colorScale(d.id))
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 3.2)
+        .attr("filter", d=> newNodeList.includes(d.id) ? "url(#nodeGlow)" : "url(#shadow)");
+
+      nodeEnter.append("text")
+        .attr("class", "dfg-nodelabel")
+        .attr("y", 7)
+        .attr("text-anchor", "middle")
+        .text(d=>d.id);
+
+      nodeEnter.transition().duration(420)
+        .style("opacity", 1);
+      nodeEnter.select("circle").transition()
+        .delay(140).duration(400)
+        .attr("r", nodeRadius);
+
+      nodeSel.exit().remove();
+
+      nodeSel.select("circle")
+        .transition().duration(220)
+        .attr("filter", d=> newNodeList.includes(d.id) ? "url(#nodeGlow)" : "url(#shadow)");
+
+      svg.selectAll(".dfg-node text").raise();
+
+      svg.select("defs").remove();
+      const defs = svg.append("defs");
+      defs.append("marker")
+        .attr("id", "arrow")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", nodeRadius+13)
+        .attr("refY", 0)
+        .attr("markerWidth", 8)
+        .attr("markerHeight", 8)
+        .attr("orient", "auto")
+        .append("path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", "#6cb8fa");
+
+      const edgeGlow = defs.append("filter").attr("id", "edgeGlow");
+      edgeGlow.append("feGaussianBlur").attr("stdDeviation", "2.8").attr("result", "colBlur");
+      let feMerge = edgeGlow.append("feMerge");
+      feMerge.append("feMergeNode").attr("in", "colBlur");
+      feMerge.append("feMergeNode").attr("in", "SourceGraphic");
+
+      const nodeShadow = defs.append("filter").attr("id", "shadow").attr("x", "-30%").attr("y", "-30%").attr("width", "160%").attr("height", "160%");
+      nodeShadow.append("feDropShadow")
+        .attr("dx", "0").attr("dy", "2").attr("stdDeviation", "3.1").attr("flood-color", "#b3d5fd").attr("flood-opacity", "0.33");
+
+      const nodeGlow = defs.append("filter").attr("id", "nodeGlow").attr("x", "-50%").attr("y", "-50%").attr("width", "200%").attr("height", "200%");
+      nodeGlow.append("feGaussianBlur").attr("stdDeviation", "7").attr("result", "glow");
+      let feMerge2 = nodeGlow.append("feMerge");
+      feMerge2.append("feMergeNode").attr("in", "glow");
+      feMerge2.append("feMergeNode").attr("in", "SourceGraphic");
+
+      runSimulation();
+    }
+
+    function showEventLogTableFlat(latestIndex) {
+      const tbody = document.getElementById("eventLogBody");
+      tbody.innerHTML = "";
+      const numRows = 15;
+      let fromIdx = Math.max(0, latestIndex-numRows+1);
+      let eventsToShow = linearLog.slice(fromIdx, latestIndex+1);
+      for(let i=0; i<eventsToShow.length; ++i) {
+        const {case:caseId, activity} = eventsToShow[i];
+        const rel = eventsToShow.length - 1 - i;
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${caseId}</td><td>${activity}</td>`;
+        if (rel === 0) row.classList.add("latest");
+        else if (rel <= 3) row.classList.add("faded1");
+        else if (rel <= 6) row.classList.add("faded2");
+        else if (rel <= 10) row.classList.add("faded3");
+        else row.classList.add("faded4");
+        tbody.appendChild(row);
+      }
+    }
+
+    // --- Main Animation ---
+    async function animateDFGConstruction() {
+      let logStep = 0;
+      for(let t=0; t<traceList.length; ++t) {
+        const {caseId, events} = traceList[t];
+        let newNodeSet = [];
+        for(let i=0; i<events.length-1; ++i) {
+          const from = events[i], to = events[i+1];
+          let nodeWasNew1 = !DFG.nodes.has(from);
+          let nodeWasNew2 = !DFG.nodes.has(to);
+          if (nodeWasNew1) newNodeSet.push(from);
+          if (nodeWasNew2) newNodeSet.push(to);
+          DFG.nodes.add(from); DFG.nodes.add(to);
+          const edgeKey = from+"→"+to;
+          let oldCount = DFG.edges.get(edgeKey) || 0;
+          DFG.edges.set(edgeKey, oldCount+1);
+          drawDFG([from, to], newNodeSet);
+          showEventLogTableFlat(logStep+1);
+          await new Promise(r=>setTimeout(r, 400));
+          newNodeSet = [];
+          logStep++;
+        }
+        drawDFG(null, []);
+        showEventLogTableFlat(logStep+1);
+        await new Promise(r=>setTimeout(r, 500));
+        logStep++;
+      }
+      drawDFG(null, []);
+      await untangleGraph();
+    }
+
+    // --- Final untangling/cleanup ---
+    async function untangleGraph() {
+      // Let the graph "relax" for 2 seconds with higher repulsion, no forceX
+      runSimulation(true);
+      return new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
+    drawDFG();
+    animateDFGConstruction();
+  </script>
+</body>
+</html>
