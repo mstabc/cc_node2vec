@@ -132,14 +132,14 @@ def main(mode):
             print(f"    Encoding: {format_time(encoding_time)}")
             
             
-            walk_count = 50 if mode == "case" else 10
+            walk_count = 10000 if mode == "case" else 50000
             walk_gen_start = time.time()
             
 
             
             trace_walks = generate_walks(updated_trace_graphs, walk_count, walk_length, type_mapping)
             if temp == 0:
-                truth_walks = generate_walks(updated_truth_graphs, 10, walk_length, type_mapping)
+                truth_walks = generate_walks(updated_truth_graphs, walk_count, walk_length, type_mapping)
 
 
             
