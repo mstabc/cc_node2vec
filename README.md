@@ -1,45 +1,84 @@
-# Dataset
-The datasets used in this work, which include both Petri net models and event logs, can be found in the [evaluation data repository](https://gitlab.com/dominiquesommers/thesis_data/-/tree/master?ref_type=heads) by [1]. You can download the following files:
+# cc_node2vec
 
-    Petri net files (.pnml)
+This repository evaluates discovered Petri net models against event logs using graph construction, random walks, Word2Vec embeddings, Procrustes alignment, and weighted distance scoring.
 
-    Event log files (.xes)
+## Required Inputs
 
-Once you have the datasets, place the .pnml and .xes files in the data folder, and the script will use them for evaluation.
+Reproducing the experiments requires both:
 
-# Running the Script
+- event logs in `.xes` format
+- discovered process models in `.pnml` format
 
-We evaluate the similarity between the discovered process model and the ground truth by comparing the trace sets σ* and σ. In the static model approach, all possible sequences over the activity set 𝒜ₘ are considered, i.e., σ* ⊆ ℬₘ. Alternatively, in the context-aware approach, the discovered process model is refined based on the observed trace σ, leading to a more constrained comparison: σ* ⊆ |σ ∩ ℬₘ|.
+The `.pnml` files used in our experiments are included in this repository under `data/<dataset>/`.
 
+The `.xes` files are not fully bundled here because of repository size limits. You must place one `.xes` log inside each dataset folder, for example:
 
+```text
+data/
+  01-Sepsis/
+    data.xes
+    data_ilp_reduced.pnml
+    data_inductive_reduced.pnml
+    data_heuristics_reduced.pnml
+    data_split_reduced.pnml
+    data_gcn_*.pnml
+```
 
-To run the script, use the following command:
+The benchmark repository of Sommers et al. can be used as a convenient download source, but it is not a strict dependency of this framework. If that source is unavailable, the event logs can still be obtained from public benchmark repositories such as 4TU, and process models can be rediscovered with standard tools such as PM4Py.
 
-python main.py <mode>
+## Setup
 
-Where <mode> is either:
+Use Python 3 and install the required packages:
 
-    case: Process the event logs and generate case-based trace graphs. (Context-Aware Model)
+```bash
+pip install pm4py gensim networkx numpy pandas scipy matplotlib scikit-learn
+```
 
-    mined: Process Petri net models and generate mined trace graphs. (Static Model)
+## Run
 
-Example:
+Main entry point:
 
-python main.py case
+```bash
+python src/main.py --alpha 1.0 --dim 128 --min_count 200 --dataset all --method all --scenario both --lambda_val inf --output_dir results/ --disable_pca_plots
+```
 
-This will process the dataset in case mode and generate embeddings based on the case-based trace graphs.
-Output
+Useful options:
 
-    The results will be saved in the results directory, including:
+- `--dataset all` or a single dataset such as `sepsis`
+- `--method all` or one of `ilp`, `inductive`, `heuristics`, `split`, `gnn`
+- `--scenario static`, `context_aware`, or `both`
+- `--disable_pca_plots` for batch runs
 
-        PCA visualizations of the trace embeddings and their comparison with the truth embeddings.
+## Batch Runs
 
-        CSV files with computed distance metrics between the trace and truth embeddings.
+Baseline run:
 
-## Functions
+```bash
+bash ./run_baseline.sh
+```
 
-    main(mode): The main function that orchestrates the conformance checking process.
+Ablation run:
 
-    compare_vectors_with_penalty: Compares two sets of Node2Vec embeddings using a penalty factor.
-# Reference
-    [1] . Sommers, V. Menkovski, and D. Fahland, “Supervised learning of process discovery techniques using graph neural networks,” Information Systems, vol. 115, p. 102209, 2023.
+```bash
+bash ./run_ablation.sh
+```
+
+On Windows PowerShell, you can also run the main command directly instead of using `bash`.
+
+## Output
+
+Main results are written to:
+
+```text
+results/results_master.csv
+```
+
+Summary tables can be generated with:
+
+```bash
+python summarize_results.py --input_csv results/results_master.csv --output_dir results/
+```
+
+## Reference
+
+Sommers, V. Menkovski, and D. Fahland, "Supervised learning of process discovery techniques using graph neural networks," Information Systems, vol. 115, 2023.
